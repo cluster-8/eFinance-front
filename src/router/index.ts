@@ -1,0 +1,84 @@
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+
+import AuthLayout from '../layouts/AuthLayout.vue'
+import AppLayout from '../layouts/AppLayout.vue'
+import Page404Layout from '../layouts/Page404Layout.vue'
+
+import RouteViewComponent from '../layouts/RouterBypass.vue'
+import UIRoute from '../pages/admin/ui/route'
+import Dashboard from '../pages/admin/dashboard/Dashboard.vue'
+
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    redirect: { name: 'dashboard' },
+  },
+  {
+    name: 'admin',
+    path: '/admin',
+    component: AppLayout,
+    children: [
+      //? PAINEL PRINCIPAL
+      {
+        name: 'dashboard',
+        path: 'dashboard',
+        component: Dashboard,
+      },
+      //? RANKING
+      {
+        // name: 'statistics',
+        // path: 'statistics',
+        name: 'ranking',
+        path: 'ranking',
+        component: Dashboard,
+       
+      },
+      {
+        name: 'comparator',
+        path: 'comparator',
+        component: Dashboard
+      }
+
+  
+    
+    ],
+  },
+  {
+    path: '/auth',
+    component: AuthLayout,
+    children: [
+      {
+        name: 'login',
+        path: 'login',
+        component: () => import('../pages/auth/login/Login.vue'),
+      },
+      {
+        name: 'signup',
+        path: 'signup',
+        component: () => import('../pages/auth/signup/Signup.vue'),
+      },
+      {
+        name: 'recover-password',
+        path: 'recover-password',
+        component: () => import('../pages/auth/recover-password/RecoverPassword.vue'),
+      },
+      {
+        path: '',
+        redirect: { name: 'login' },
+      },
+    ],
+  },
+  {
+    path: '/:catchAll(.*)',
+    component: () => import('../pages/404-pages/VaPageNotFoundCustom.vue')
+   
+  },
+]
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  //  mode: process.env.VUE_APP_ROUTER_MODE_HISTORY === 'true' ? 'history' : 'hash',
+  routes,
+})
+
+export default router
