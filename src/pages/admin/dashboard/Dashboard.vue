@@ -1,14 +1,8 @@
 <template>
+  <h3 class="va-h3">Taxas de Serviço</h3>
+  <p>Selecione abaixo o tipo de serviço e a instituição financeira para visualizar as taxas de serviços</p>
+
   <div style="width: 300px;">
-    <va-switch
-      v-model="value"
-      true-label="Pessoa Física"
-      false-label="Pessoa Jurídica"
-      off-color=""
-      size="small"
-      class="mr-6"
-      style="--va-switch-checker-background-color: white;"
-    />
 
     <va-form
       ref="form"
