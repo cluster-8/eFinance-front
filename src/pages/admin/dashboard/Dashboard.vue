@@ -2,6 +2,8 @@
   <h3 class="va-h3">Taxas de Serviço</h3>
   <p>Selecione abaixo o tipo de serviço e a instituição financeira para visualizar as taxas de serviços</p>
 
+  <div>{{ instituicoes }}</div>
+
   <div style="width: 300px;">
 
     <va-form
@@ -51,6 +53,10 @@
 <script>
 
 import Table from '../dashboard/DashboardTable.vue'
+import api from '../../../services/api'
+import { ref } from 'vue';
+import { onMounted } from 'vue';
+
 
 export default {
   components: {
@@ -69,7 +75,16 @@ export default {
       dateRules: [(value) => !!value || "Should be date"],
     };
   },
+  setup() {
+    const instituicoes = ref([])
+    
+    const fetchInstituicoes = async () => {
+      let response = await api.get('instituicoes')
+      console.log(response)
+      //instituicoes.value.response.data
+    }
+    onMounted(fetchInstituicoes)
+  },
 };
-
 
 </script>
