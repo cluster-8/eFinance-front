@@ -27,6 +27,20 @@ export default {
         icon: 'vuestic-iconset-statistics',
       },
       disabled: true,
+      children: [
+        {
+          name: 'tariffs',
+          displayName: 'menu.tariffs'
+        },
+        {
+          name: 'timeline',
+          displayName: 'menu.timeline',
+        },
+        {
+          name: 'topfive',
+          displayName: 'menu.topfive',
+        },
+      ]
      /*  children: [
         
         {
