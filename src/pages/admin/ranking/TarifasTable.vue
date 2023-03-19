@@ -7,11 +7,9 @@
           <table class="va-table va-table--striped va-table--hoverable">
             <thead>
               <tr>
-                <th>Serviço</th>
+                <th>Posição</th>
+                <th>Instituição</th>
                 <th>Valor Máximo</th>
-                <th>Data de Vigência</th>
-                <th>Unidade</th>
-                <th>Periodicidade</th>
               </tr>
             </thead>
 

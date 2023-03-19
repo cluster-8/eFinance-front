@@ -39,7 +39,7 @@
     
   </div>
     
-  <Table class="mt-3"></Table>
+  <Table class="mt-3" style="width: auto;"></Table>
 
 </template>
 
