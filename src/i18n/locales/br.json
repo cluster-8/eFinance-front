@@ -4,9 +4,11 @@
     "alreadyJoined": "Já entrou.",
     "createAccount": "Criar conta",
     "createNewAccount": "Criar uma nova conta",
+    "name": "Nome",
     "email": "Email",
     "login": "Entrar",
     "password": "Senha",
+    "confirmpassword": "Confirme sua senha",
     "signUp": "Cadastrar-se",
     "termsOfUse": "Termos de uso.",
     "welcome": "Bem vindo!"

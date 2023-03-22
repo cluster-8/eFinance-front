@@ -1,5 +1,15 @@
 <template>
   <form @submit.prevent="onsubmit()">
+
+    <va-input
+      v-model="name"
+      class="mb-3"
+      type="input"
+      :label="t('auth.name')"
+      :error="!!nameErrors.length"
+      :error-messages="nameErrors"
+    />
+
     <va-input
       v-model="email"
       class="mb-3"
@@ -18,27 +28,17 @@
       :error-messages="passwordErrors"
     />
 
-    <div class="auth-layout__options d-flex align-center justify-space-between">
-      <va-checkbox
-        v-model="agreedToTerms"
-        class="mb-0"
-        :error="!!agreedToTermsErrors.length"
-        :error-messages="agreedToTermsErrors"
-      >
-        <template #label>
-          <span class="ml-2">
-            {{ t('auth.agree') }}
-            <span class="va-link">{{ t('auth.termsOfUse') }}</span>
-          </span>
-        </template>
-      </va-checkbox>
-      <router-link class="ml-1 va-link" :to="{ name: 'recover-password' }">
-        {{ t('auth.recover_password') }}
-      </router-link>
-    </div>
+    <va-input
+      v-model="confirmpassword"
+      class="mb-3"
+      type="password"
+      :label="t('auth.confirmpassword')"
+      :error="!!confirmpasswordErrors.length"
+      :error-messages="confirmpasswordErrors"
+    />
 
     <div class="d-flex justify-center mt-3">
-      <va-button class="my-0" @click="onsubmit">{{ t('auth.sign_up') }}</va-button>
+      <va-button class="my-0" @click="onsubmit">{{ t('Cadastrar') }}</va-button>
     </div>
   </form>
 </template>
@@ -49,23 +49,29 @@
   import { useI18n } from 'vue-i18n'
   const { t } = useI18n()
 
+  const name = ref('')
   const email = ref('')
   const password = ref('')
-  const agreedToTerms = ref(false)
+  const confirmpassword = ref('')
+  const nameErrors = ref<string[]>([])
   const emailErrors = ref<string[]>([])
   const passwordErrors = ref<string[]>([])
-  const agreedToTermsErrors = ref<string[]>([])
+  const confirmpasswordErrors = ref<string[]>([])
+
 
   const formReady = computed(() => {
-    return !(emailErrors.value.length || passwordErrors.value.length || agreedToTermsErrors.value.length)
+    return !(emailErrors.value.length || passwordErrors.value.length|| confirmpasswordErrors.value.length || nameErrors.value.length)
   })
 
   function onsubmit() {
     if (!formReady.value) return
 
-    emailErrors.value = email.value ? [] : ['Email is required']
-    passwordErrors.value = password.value ? [] : ['Password is required']
-    agreedToTermsErrors.value = agreedToTerms.value ? [] : ['You must agree to the terms of use to continue']
+
+    nameErrors.value = name.value ? [] : ['Digite o nome']
+    emailErrors.value = email.value ? [] : ['Digite o email']
+    passwordErrors.value = password.value ? [] : ['Digite a senha']
+    confirmpasswordErrors.value = password.value ? [] : ['Digite a senha novamente']
+
 
     useRouter().push({ name: 'dashboard' })
   }

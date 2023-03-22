@@ -18,12 +18,6 @@
       :error-messages="passwordErrors"
     />
 
-    <div class="auth-layout__options d-flex align-center justify-space-between">
-      <va-checkbox v-model="keepLoggedIn" class="mb-0" :label="t('auth.keep_logged_in')" />
-      <router-link class="ml-1 va-link" :to="{ name: 'recover-password' }">{{
-        t('auth.recover_password')
-      }}</router-link>
-    </div>
 
     <div class="d-flex justify-center mt-3">
       <va-button class="my-0" @click="onsubmit">{{ t('auth.login') }}</va-button>
@@ -49,8 +43,8 @@
   function onsubmit() {
     if (!formReady.value) return
 
-    emailErrors.value = email.value ? [] : ['Email is required']
-    passwordErrors.value = password.value ? [] : ['Password is required']
+    emailErrors.value = email.value ? [] : ['Digite seu email']
+    passwordErrors.value = password.value ? [] : ['Digite sua senha']
 
     router.push({ name: 'dashboard' })
   }

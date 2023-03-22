@@ -2,7 +2,7 @@
   <div class="auth-layout row align-content-center">
     <div class="flex xs12 pa-3 justify-center">
       <router-link class="py-5 justify-center d-flex" to="/">
-        <vuestic-logo height="32" />
+        <logo/>
       </router-link>
     </div>
 
@@ -31,11 +31,12 @@
 
 <script>
   import VuesticLogo from '../components/VuesticLogo.vue'
+  import Logo from '../components/Logo.vue'
   import { useI18n } from 'vue-i18n'
 
   export default {
     name: 'AuthLayout',
-    components: { VuesticLogo },
+    components: { Logo },
     setup() {
       const { t } = useI18n()
       return { t }
