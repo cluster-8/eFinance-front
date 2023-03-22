@@ -2,39 +2,43 @@
   <h3 class="va-h3">Taxas de Serviço</h3>
   <p>Selecione abaixo o tipo de serviço e a instituição financeira para visualizar as taxas de serviços</p>
   
-  <div style="width: 300px;">
+  <div style="width: 300px; display: flex; flex-direction: column;">
 
     
-    <!-- <va-select
-      v-model="selectValue"
+    <va-select
+      v-model="pessoa"
       class="mt-3"
       label="Tipo de Serviço:"
       :rules="selectRules"
-      :options="options"
+      :options="tipoPessoa"
     />
 
-    
-    <va-input
-    v-model="instituicoes[0]"
-    class="mt-3"
-    label="Busque a Instituição"
-    >
-    <template #appendInner>
-        <va-icon name="search" />
-      </template>
-    </va-input> -->
       
    
     <va-select
-      v-model="value"
-      class="mb-6"
-      label="Default"
+      v-model="banco"
+      class="mb-6 mt-2"
+      label="Busque a Instituição"
       :options="options"
       :text-by="(option) => option.nome"
       searchable
+      
     />
-    
+
+    <va-button
+      icon-right="search"
+      icon-color="#ffffff90"
+      class="mr-3 mb-2 mt-3"
+      style="border-radius: 0.25rem; align-self: flex-start;"
+      @click="handleSubmit(pessoa, value)"
+    >
+      Buscar 
+    </va-button>
+
+
   </div>
+
+
 
   <Table style="margin-top: 2rem;"/>
 </template>
@@ -49,35 +53,31 @@ import { ref } from 'vue';
 import { onMounted } from 'vue';
 
 const instituicoes = ref([])
-
+const tipoPessoa = ["Física", "Jurídica"]
+const pessoa = ref()
 
 const fetchInstituicoes = async () => {
-      let response = await api.get('instituicoes')
-      instituicoes.value = response.data
-    }
+  let response = await api.get('instituicoes')
+  instituicoes.value = response.data
+}
+
+const handleSubmit = (pessoa, value) => {
+  console.log(pessoa)
+  console.log(value)
+}
 
 export default {
   components: {
     Table
   },
   data() {
-    // const options = [
-    //   { "id": 1, "nome": "Teste 1"},
-    //   { "id": 2, "nome": "Teste 2"},
-    //   { "id": 3, "nome": "Teste 3"},
-    // ]
     const options = instituicoes
     return {
-      // value: [(value) => value.instituicoes.name],
-      // inputValue: "",
-      // selectValue: "Pessoa Física",
-      // inputDate: undefined,
-      // options: ["Pessoa Física", "Pessoa Jurídica"],
-      // inputRules: [(value) => value === "Ben" || "test"],
-      // //selectRules: [(value) => value === "Minsk" || "Should be Minsk"],
-      // dateRules: [(value) => !!value || "Should be date"],
-      value: options[0],
+      banco: options[0],
       options,
+      pessoa,
+      tipoPessoa,
+      handleSubmit
     };
   },
   setup() {
@@ -85,16 +85,6 @@ export default {
       fetchInstituicoes()
     })  
 
-    // const instituicoes = ref([])
-    
-    // const fetchInstituicoes = async () => {
-    //   let response = await api.get('instituicoes')
-    //   // instituicoes.value = response.data
-    //   // console.log(response)
-    //   return response.data
-    // }
-    // onMounted(fetchInstituicoes)
-    // return {instituicoes}
   },
 
   
