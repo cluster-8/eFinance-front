@@ -2,9 +2,9 @@
   <h3 class="va-h3">Taxas de Serviço</h3>
   <p>Selecione abaixo o tipo de serviço e a instituição financeira para visualizar as taxas de serviços</p>
   
-  <div style="width: 300px; display: flex; flex-direction: column;">
+  <div style="width: 300px; display: flex; margin-top: 20px;">
 
-    
+    <div class="mr-3">
     <va-select
       v-model="pessoa"
       class="mt-3"
@@ -12,28 +12,22 @@
       :rules="selectRules"
       :options="tipoPessoa"
     />
+    </div>
 
       
-   
+    <div class="mr-3">
     <va-select
       v-model="banco"
-      class="mb-6 mt-2"
+      class="mt-3"
       label="Busque a Instituição"
       :options="options"
       :text-by="(option) => option.nome"
       searchable
       
     />
+    </div>
 
-    <va-button
-      icon-right="search"
-      icon-color="#ffffff90"
-      class="mr-3 mb-2 mt-3"
-      style="border-radius: 0.25rem; align-self: flex-start;"
-      @click="handleSubmit(pessoa, value)"
-    >
-      Buscar 
-    </va-button>
+
 
 
   </div>

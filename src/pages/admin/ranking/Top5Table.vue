@@ -1,7 +1,6 @@
 <template>
   <div class="markup-tables flex">
     <va-card>
-      <va-card-title>Nome da Tabela</va-card-title>
       <va-card-content>
         <div class="table-wrapper">
           <table class="va-table va-table--striped va-table--hoverable">

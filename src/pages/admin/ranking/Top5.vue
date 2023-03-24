@@ -34,19 +34,9 @@
       />
     </div>
 
-    <div style="display: flex; align-items: center;">
-
-    <va-button
-      icon-right="search"
-      icon-color="#ffffff90"
-      class="mr-3 mb-2 mt-3"
-      style="border-radius: 0.25rem; align-self: flex-start;"
-      round
-    >Buscar
-    </va-button>
-    </div>
 
       </div>
+      
       <div style="margin-top: 30px;">
       <Table class="mt-3" style="width: auto;"></Table>
     </div>
