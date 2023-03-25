@@ -1,6 +1,7 @@
 <template>
   <div class="markup-tables flex">
     <va-card>
+      <va-card-title>Nome da Tabela</va-card-title>
       <va-card-content>
         <div class="table-wrapper">
           <table class="va-table va-table--striped va-table--hoverable">
@@ -15,8 +16,13 @@
             </thead>
 
             <tbody>
-              <tr v-for="user in users" :key="user.id">
-               <!--  
+              <tr v-for="tarifa in tarifas" :key="tarifa.id">
+                <td>{{ tarifa.servicoId }}</td>
+                <td>{{ tarifa.valorMaximo }}</td>
+                <td>{{ tarifa.dataVigencia }}</td>
+                <td>{{ tarifa.unidade }}</td>
+                <td>{{ tarifa.periodicidade }}</td>
+                <!--  
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.country }}</td>
@@ -34,37 +40,43 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import { useI18n } from 'vue-i18n'
-  import data from '../../../data/tables/markup-table/data.json'
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import data from '../../../data/tables/markup-table/data.json'
+import { onMounted } from 'vue';
 
-  const { t } = useI18n()
+defineProps({
+  tarifas: Object
+})
+const { t } = useI18n()
 
-  const users = ref(data.slice(0, 8))
 
-  function getStatusColor(status: string) {
-    if (status === 'paid') {
-      return 'success'
-    }
+const users = ref(data.slice(0, 8))
 
-    if (status === 'processing') {
-      return 'info'
-    }
-
-    return 'danger'
+function getStatusColor(status: string) {
+  if (status === 'paid') {
+    return 'success'
   }
+
+  if (status === 'processing') {
+    return 'info'
+  }
+
+  return 'danger'
+}
+
 </script>
 
 <style lang="scss">
-  .markup-tables {
-    .table-wrapper {
-      overflow: auto;
-    }
-
-    .va-table {
-      width: 100%;
-    }
+.markup-tables {
+  .table-wrapper {
+    overflow: auto;
   }
+
+  .va-table {
+    width: 100%;
+  }
+}
 </style>
 
 
