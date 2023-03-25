@@ -1,27 +1,19 @@
 <template>
   <div class="markup-tables flex">
     <va-card>
-      <va-card-title>Nome da Tabela</va-card-title>
       <va-card-content>
         <div class="table-wrapper">
           <table class="va-table va-table--striped va-table--hoverable">
             <thead>
               <tr>
-                <th>Serviço</th>
+                <th>Posição</th>
+                <th>Instituição</th>
                 <th>Valor Máximo</th>
-                <th>Data de Vigência</th>
-                <th>Unidade</th>
-                <th>Periodicidade</th>
               </tr>
             </thead>
 
             <tbody>
-              <tr v-for="tarifa in tarifas" :key="tarifa.id">
-                <td>{{ tarifa.servicoId }}</td>
-                <td>{{ tarifa.valorMaximo }}</td>
-                <td>{{ tarifa.dataVigencia }}</td>
-                <td>{{ tarifa.unidade }}</td>
-                <td>{{ tarifa.periodicidade }}</td>
+              <tr v-for="user in users" :key="user.id">
                 <!--  
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
@@ -43,13 +35,8 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import data from '../../../data/tables/markup-table/data.json'
-import { onMounted } from 'vue';
 
-defineProps({
-  tarifas: Object
-})
 const { t } = useI18n()
-
 
 const users = ref(data.slice(0, 8))
 
@@ -64,7 +51,6 @@ function getStatusColor(status: string) {
 
   return 'danger'
 }
-
 </script>
 
 <style lang="scss">
@@ -78,7 +64,3 @@ function getStatusColor(status: string) {
   }
 }
 </style>
-
-
-
-

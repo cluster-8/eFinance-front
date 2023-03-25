@@ -5,9 +5,9 @@
   </div>
 
   
-  <div style="width: 300px; display: flex ;">
+  <div style="width: 300px; display: flex; margin-top: 20px;">
+
     <div class="mr-3">
-      
       <va-select
         v-model="selectValue"
         class="mt-3"
@@ -38,8 +38,11 @@
     </div>
     
   </div>
-    
+
+  <div style="margin-top: 30px;">
+
   <Table class="mt-3" style="width: auto;"></Table>
+  </div>
 
 </template>
 
