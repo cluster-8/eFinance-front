@@ -5,19 +5,19 @@
   <div style="width: 300px; display: flex; margin-top: 1.2rem;">
     <div class="mr-3">
       <va-select 
-        v-model="pessoa" 
+        v-model="tipoServico" 
         class="mt-3" 
         label="Tipo de Serviço:" 
-        :rules="selectRules" 
-        :options="tipoPessoa"
+        :options="tipos"
       />
     </div>
     <div class="mr-3">
       <va-select 
         v-model="banco" 
         class="mt-3" 
+        loading
         label="Busque a Instituição" 
-        :options="options"
+        :options="instituicoes"
         :text-by="(option) => option.nome" searchable />
     </div>
   </div> 
@@ -40,16 +40,16 @@
 
 
 
-<script>
+<script lang="ts">
 import { ScalingSquaresSpinner } from 'epic-spinners'
 import Table from '../dashboard/DashboardTable.vue'
 import api from '../../../services/api'
-import { onMounted, ref, toRaw, watch } from 'vue';
+import { onBeforeMount, onMounted, ref, toRaw, watch } from 'vue';
 
 const tarifas = ref()
 const instituicoes = ref([])
-const tipoPessoa = ["Física", "Jurídica"]
-const pessoa = ref()
+const tipoServico = ref<'Física' | 'Jurídica'>('Física')
+const tipos = ['Física', 'Jurídica']
 const banco = ref()
 const error = ref(false)
 const isVisible = ref(true)
@@ -60,17 +60,19 @@ const fetchInstituicoes = async () => {
 }
 
 const fetchTarifas = async (banco) => {
+  
   if (!banco) return
-  console.log(banco)
+  console.log(' Tipo =',tipoServico)
   let id = toRaw(banco.id)
   try {
-    let response = await api.get(`instituicao/tarifas/${id}`)
+    let response = await api.get(`instituicao/tarifas/${id}?tipo=${tipoServico.value.charAt(0)}`)
     isVisible.value = true
     tarifas.value = response.data
+    console.log(response.data)
     error.value = false
   } catch (e) {
     isVisible.value = false
-    error.value = e.response.data.message
+    // error.value = e.response.data.message;
   }
 }
 
@@ -81,24 +83,33 @@ export default {
     ScalingSquaresSpinner
   },
   data() {
-    const options = instituicoes
     return {
       banco,
-      options,
-      pessoa,
-      tipoPessoa,
+      tipos,
+      tipoServico,
       fetchTarifas,
       tarifas,
+      instituicoes,
       error,
       isVisible
     };
   },
-  setup() {
-    watch(banco, (newValue) => {
+  watch: {
+    banco(newValue, oldValue) {
+      console.log(newValue, oldValue)
       fetchTarifas(newValue)
-    })
-
-    onMounted(() => {
+    },
+    tipoServico(newValue, oldValue) {
+      console.log(newValue)
+      fetchTarifas(banco.value)
+    }
+   },
+  setup() {
+    // watch(banco, (newValue) => {
+    //   fetchTarifas(newValue)
+    // })
+   
+    onBeforeMount(() => {
       fetchInstituicoes()
       isVisible.value = false
     })
