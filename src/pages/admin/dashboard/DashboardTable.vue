@@ -1,7 +1,6 @@
 <template>
   <div class="markup-tables flex">
     <va-card>
-      <va-card-title>Nome da Tabela</va-card-title>
       <va-card-content>
         <div class="table-wrapper">
           <table class="va-table va-table--striped va-table--hoverable">
@@ -17,8 +16,8 @@
 
             <tbody>
               <tr v-for="tarifa in tarifas" :key="tarifa.id">
-                <td>{{ tarifa.servicoId }}</td>
-                <td>{{ tarifa.valorMaximo }}</td>
+                <td>{{ tarifa.servico.nome }}</td>
+                <td>R${{ tarifa.valorMaximo }}</td>
                 <td>{{ tarifa.dataVigencia }}</td>
                 <td>{{ tarifa.unidade }}</td>
                 <td>{{ tarifa.periodicidade }}</td>
