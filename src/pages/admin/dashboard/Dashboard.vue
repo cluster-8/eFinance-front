@@ -52,7 +52,7 @@
 import { ScalingSquaresSpinner } from 'epic-spinners'
 import Table from '../dashboard/DashboardTable.vue'
 import api from '../../../services/api'
-import { onBeforeMount, onMounted, ref, toRaw, watch } from 'vue';
+import { onBeforeMount, ref, toRaw } from 'vue';
 
 const tarifas = ref()
 const instituicoes = ref([])
@@ -61,7 +61,7 @@ const tipos = ['Física', 'Jurídica']
 const banco = ref()
 const error = ref(false)
 const isVisible = ref(true)
-const isLoading = ref(true)
+const isLoading = ref(false)
 
 const fetchInstituicoes = async () => {
   isLoading.value = true
