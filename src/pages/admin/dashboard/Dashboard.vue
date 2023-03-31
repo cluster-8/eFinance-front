@@ -40,7 +40,7 @@
 
   <div style="margin-top: 2rem;">
     <Table
-      v-if="isVisible"
+      v-if="(isVisible && !isLoading)"
       :tarifas="!error ? tarifas : ''"
     ></Table>
   </div>
