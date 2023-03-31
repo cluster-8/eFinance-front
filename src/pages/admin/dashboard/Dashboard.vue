@@ -76,14 +76,15 @@ const fetchTarifas = async (banco) => {
   let id = toRaw(banco.id)
   try {
     let response = await api.get(`instituicao/tarifas/${id}?tipo=${tipoServico.value.charAt(0)}`)
-    isVisible.value = true
     tarifas.value = response.data
     error.value = false
+    isLoading.value = false
+    isVisible.value = true
+    
   } catch (e) {
+    isLoading.value = false
     isVisible.value = false
     error.value = e.response.data.message;
-  } finally {
-    isLoading.value = false
   }
 }
 
@@ -111,7 +112,7 @@ export default {
     },
     tipoServico() {
       fetchTarifas(banco.value)
-    },
+    }
    },
   setup() {
   
