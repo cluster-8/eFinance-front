@@ -119,6 +119,9 @@ export default {
     onBeforeMount(() => {
       fetchInstituicoes()
       isVisible.value = false
+      if(banco.value) {
+        fetchTarifas(banco.value)
+      }
     })
   },
 
