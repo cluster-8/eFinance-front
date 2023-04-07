@@ -42,12 +42,11 @@
         color="#154EC1"
       />
     </div>
-
     <div v-if="isVisible && !isLoading" style="margin-top: 2rem">
-      <Table :tarifas="!error ? tarifas : ''" />
+      <DataTable v-bind:tarifas="tarifas"></DataTable>
+      <!-- <Table :tarifas="!error ? tarifas : ''" /> -->
     </div>
-    <div
-      style="
+    <div style="
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -75,6 +74,7 @@ import Table from "../dashboard/DashboardTable.vue";
 import api from "../../../services/api";
 import { onBeforeMount, ref, toRaw } from "vue";
 import image from "/accountant-pana.png";
+import DataTable from "./DataTable.vue";
 
 const tarifas = ref();
 const instituicoes = ref([]);
@@ -115,6 +115,7 @@ const fetchTarifas = async (banco) => {
 
 export default {
   components: {
+    DataTable,
     Table,
     ScalingSquaresSpinner,
   },
