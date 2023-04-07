@@ -1,28 +1,29 @@
 <template>
-<div>
-<h3 class="va-h3">Top 5</h3>
+ <div>
+  <h3 class="va-h3">Top 5</h3>
   <p>Selecione abaixo o tipo de serviço, o serviço e a data de início e fim do período</p>
-</div>
-  <div style="width: 300px; display: flex; margin-top: 20px;">
+ </div>
+
+ <div style="width: 300px; display: flex; margin-top: 20px;">
 
     <div class="mr-3">
-    <va-select
-      v-model="pessoa"
-      class="mt-3"
-      label="Tipo de Serviço"
-      :options="tipoPessoa"
-    />
+      <va-select
+        v-model="pessoa"
+        class="mt-3"
+        label="Tipo de Serviço"
+        :options="tipoPessoa"
+      />
     </div>
 
     <div class="mr-3">
-    <va-select
-      v-model="value"
-      class="mt-3"
-      label="Serviço"
-      :options="options"
-      searchable
-      highlight-matched-text
-    />
+      <va-select
+        v-model="value"
+        class="mt-3"
+        label="Serviço"
+        :options="options"
+        searchable
+        highlight-matched-text
+      />
     </div>
 
     <div class="mr-3">
@@ -31,15 +32,14 @@
         class="mt-3"
         :reset-on-close="false"
         label="Data de inicio e fim"
-      />
+      />   
     </div>
+ </div>
 
+  
 
-      </div>
-      
-      <div style="margin-top: 30px;">
-      <Table class="mt-3" style="width: auto;"></Table>
-    </div>
+  <Table class="mt-3"></Table>
+  
 
 </template>
 
@@ -75,3 +75,11 @@ export default {
   },
 };
 </script>
+
+
+<style lang="scss" scoped>
+  .teste {
+    height: 10rem;
+    width: rem
+  }
+</style>
