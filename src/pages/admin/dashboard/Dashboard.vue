@@ -17,7 +17,7 @@
     </div>
     <div class="mr-3" style="flex-grow: 1">
       <va-select
-        placeholder="Seleciona a Instituição"
+        placeholder="Selecione a Instituição"
         v-model="banco"
         class="mt-3"
         label="Instituição Financeira"
