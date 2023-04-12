@@ -36,9 +36,10 @@
     </div>
  </div>
 
-  
+ <div style="margin-top: 30px;">
 
-  <Table class="mt-3"></Table>
+  <Table class="mt-3" style="width: auto"></Table>
+  </div>
   
 
 </template>
