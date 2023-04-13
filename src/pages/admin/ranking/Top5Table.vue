@@ -8,7 +8,7 @@
               <tr>
                 <th class="align-table" style="width:15%">Posição</th>
                 <th class="align-table" style="width:70%">Instituição</th>
-                <th class="align-table" style="width:15%">Valor Máximo</th>
+                <th class="align-table" style="width:15%">Valor</th>
               </tr>
             </thead>
 
