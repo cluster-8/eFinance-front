@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <!--<div class="row">
       <va-select
         v-model="sortBy"
         class="flex flex-col mb-2 md6"
@@ -15,7 +15,7 @@
         :options="sortingOrderOptions"
         :value-by="(option) => option.value"
       />
-    </div>
+    </div> -->
   
     <va-data-table
       v-model:sort-by="sortBy"
@@ -30,7 +30,7 @@
       "
     />
   
-    <va-alert
+    <!--<va-alert
       class="mt-3"
       color="info"
       outline
@@ -38,7 +38,7 @@
       <span v-if="sortingOrder">
         Sorted items order (showing id):
         <va-chip v-show="!!sortedRowsEmitted.length">{{
-          sortedRowsEmitted.join(" --> ")
+          sortedRowsEmitted.join("  ")
         }}</va-chip>
         <va-chip v-show="!!sortingOrderEmitted">{{
           sortingOrderEmitted
@@ -51,7 +51,7 @@
           sortedRowsEmitted.join(", ")
         }}</va-chip>
       </span>
-    </va-alert>
+    </va-alert> -->
   </template>
   
   <script>
@@ -69,7 +69,7 @@
         
       const columns = [
         { key: "servico.nome", name:'Serviço', label:'Serviço', sortable: true, sortingOptions: ["desc", "asc"] },
-        { key: "valorMaximo", name:'Valor Máximo', label:'Valor Máximo em R$', sortable: true },
+        { key: "valorMaximo", name:'Valor Máximo', label:'Valor Máximo em R$', sortable: true, sortingFn: (a , b ) => a > b ? -1 : 1 },
         { key: "dataVigencia", name:'Data de Vigência', label:'Data de Vigência', sortable: true },
         { key: "unidade", name:'Unidade', sortable: true },
         { key: "periodicidade", name: 'Periodicidade', sortable: true },
