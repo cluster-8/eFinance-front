@@ -20,11 +20,15 @@
     
     <div class="mr-3">
       <va-select
-        v-model="selectValue"
+        v-model="idServico"
         class="mt-3"
         label="Serviço"
-        :rules="selectRules"
-        :options="services"
+        :options="servicos"
+        :text-by="(option) => option.nome"
+        style="width: 34rem;"
+        search-placeholder-text="Buscar"
+        searchable
+
       />
     </div>
 
@@ -48,10 +52,19 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted } from 'vue';
 import Table from '../ranking/TarifasTable.vue'
+import api from "../../../services/api";
 
 const tipoPessoa = ["Física", "Jurídica"]
+const servicos = ref([]);
+const idServico = ref();
+
+const fetchServicos = async () => {
+  let response = await api.get("servicos");
+  servicos.value = response.data
+  console.log(response.data)
+}
 
 export default {
   components: {
@@ -63,11 +76,15 @@ export default {
       validation: null,
       services:['Teste1', 'Teste2'],
       tipoPessoa,
+      servicos,
+      idServico
     }
 
   },
   setup() {
-    //const validation = reactive({valitadion : null})
+    onMounted(() => {
+      fetchServicos()
+    })
   }
 }
 
