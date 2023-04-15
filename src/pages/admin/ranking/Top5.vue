@@ -11,19 +11,22 @@
         v-model="tipoServico"
         class="mt-3"
         label="Tipo de Serviço"
-        :options="tipoPessoa"
+        :options="tipos"
         style="width: 200px;"
       />
     </div>
     <div class="mr-3">
       <va-select
-        v-model="value"
-        class="mt-3"
-        label="Serviço"
-        :options="options"
-        searchable
-        highlight-matched-text
-      />
+            placeholder="Selecione o serviço desejado"
+            v-model="idServico"
+            class="mt-3"
+            label="Serviço"
+            :options="servicos"
+            :text-by="(option) => option.nome"
+            style="width: 34rem;"
+            search-placeholder-text="Buscar"
+            searchable
+        />
     </div>
 
     <div class="mr-3">
@@ -43,43 +46,52 @@
 
 </template>
 
-<script>
-import Table from '../ranking/Top5Table.vue'
+<script lang="ts">
+  import { onMounted } from 'vue';
+  import Table from '../ranking/Top5Table.vue'
+  import { ref } from 'vue';
+  import api from '../../../services/api'
 
+  const tipoServico = ref < "Pessoa Física" | "Pessoa Jurídica" | "Todos" > ("Pessoa Física");
+  const tipos = ["Pessoa Física", "Pessoa Jurídica", "Todos"]
+  const servicos = ref([])
+  const idServico = ref()
 
-const tipoPessoa = ["Física", "Jurídica"]
-const datePlusDay = (date, days) => {
-  const d = new Date(date);
-  d.setDate(d.getDate() + days);
-  return d;
-};
-const nextWeek = datePlusDay(new Date(), 7);
-
-export default {
-  name: "Variations",
-  components: {
-    Table
-  },
-  data() {
-    return {
-      options: [
-        "one",
-        "two",
-        "three",
-      ],
-      tipoPessoa,
-      single: new Date(),
-      range: { start: new Date(), end: nextWeek },
-
-    };
-  },
-};
-</script>
-
-
-<style lang="scss" scoped>
-  .teste {
-    height: 10rem;
-    width: rem
+  const fetchServicos = async () => {
+    let response = await api.get("servicos")
+    servicos.value = response.data
   }
-</style>
+
+  const datePlusDay = (date, days) => {
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    return d;
+  };
+  const nextWeek = datePlusDay(new Date(), 7);
+
+  export default {
+    name: "Variations",
+    components: {
+      Table
+    },
+    data() {
+      return {
+        tipoServico,
+        tipos,
+        servicos,
+        idServico,
+        single: new Date(),
+        range: { start: new Date(), end: nextWeek },
+
+      };
+    },
+    watch: {
+      
+    },
+    setup() {
+      onMounted(() => {
+        fetchServicos()
+      })
+    }
+  };
+</script>

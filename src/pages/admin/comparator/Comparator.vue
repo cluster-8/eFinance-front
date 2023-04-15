@@ -16,6 +16,7 @@
   <div style="display: flex;">
     <div class="mr-5">
       <va-select
+          placeholder="Selecione o serviço desejado"
           v-model="idServico"
           class="mt-3"
           label="Serviço"

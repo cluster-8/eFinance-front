@@ -9,10 +9,10 @@
 
     <div class="mr-3">
       <va-select
-        v-model="selectValue"
+        v-model="tipoServico"
         class="mt-3"
         label="Tipo de Serviço"
-        :options="tipoPessoa"
+        :options="tipos"
         style="width: 200px;"
 
       />
@@ -20,6 +20,7 @@
     
     <div class="mr-3">
       <va-select
+        placeholder="Selecione o serviço desejado"
         v-model="idServico"
         class="mt-3"
         label="Serviço"
@@ -51,42 +52,44 @@
 
 </template>
 
-<script>
-import { ref, onMounted } from 'vue';
-import Table from '../ranking/TarifasTable.vue'
-import api from "../../../services/api";
+<script lang="ts">
+  import { ref, onMounted } from 'vue';
+  import Table from '../ranking/TarifasTable.vue'
+  import api from "../../../services/api";
 
-const tipoPessoa = ["Física", "Jurídica"]
-const servicos = ref([]);
-const idServico = ref();
+  const tipoServico = ref < "Pessoa Física" | "Pessoa Jurídica" | "Todos" > ("Pessoa Física");
+  const tipos = ["Pessoa Física", "Pessoa Jurídica", "Todos"]
+  const servicos = ref([]);
+  const idServico = ref();
 
-const fetchServicos = async () => {
-  let response = await api.get("servicos");
-  servicos.value = response.data
-  console.log(response.data)
-}
-
-export default {
-  components: {
-    Table
-  },
-  data() {
-    return {
-      selectValue: "",
-      validation: null,
-      services:['Teste1', 'Teste2'],
-      tipoPessoa,
-      servicos,
-      idServico
-    }
-
-  },
-  setup() {
-    onMounted(() => {
-      fetchServicos()
-    })
+  const fetchServicos = async () => {
+    let response = await api.get("servicos");
+    servicos.value = response.data
+    console.log(response.data)
   }
-}
+
+  export default {
+    components: {
+      Table
+    },
+    data() {
+      return {
+        selectValue: "",
+        validation: null,
+        services:['Teste1', 'Teste2'],
+        tipos,
+        tipoServico,
+        servicos,
+        idServico
+      }
+
+    },
+    setup() {
+      onMounted(() => {
+        fetchServicos()
+      })
+    }
+  }
 
 
 </script>
