@@ -8,7 +8,7 @@
               <tr>
                 <th class="align-table" style="width:15%">Posição</th>
                 <th class="align-table" style="width:70%">Instituição</th>
-                <th class="align-table" style="width:15%">Valor Máximo</th>
+                <th class="align-table" style="width:15%">Valor</th>
               </tr>
             </thead>
 
@@ -87,8 +87,8 @@ export default defineComponent({
     display: flex;
     background-color: #0050C0;
     text-align: center;
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
@@ -96,7 +96,6 @@ export default defineComponent({
     vertical-align: middle;
   }
   .institution-name {
-    font-size: 20px;
     vertical-align: middle;
   }
 
@@ -111,7 +110,6 @@ export default defineComponent({
   }
 
   .maximum-value {
-    font-size: 18px;
     vertical-align: middle;
   }
 }

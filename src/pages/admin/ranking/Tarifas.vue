@@ -11,9 +11,10 @@
       <va-select
         v-model="selectValue"
         class="mt-3"
-        label="Tipo de Serviço:"
-        :rules="selectRules"
-        :options="services"
+        label="Tipo de Serviço"
+        :options="tipoPessoa"
+        style="width: 200px;"
+
       />
     </div>
     
@@ -21,7 +22,7 @@
       <va-select
         v-model="selectValue"
         class="mt-3"
-        label="Serviço:"
+        label="Serviço"
         :rules="selectRules"
         :options="services"
       />
@@ -31,7 +32,7 @@
       <va-select
         v-model="selectValue"
         class="mt-3"
-        label="Tipo de Ranking:"
+        label="Tipo de Ranking"
         :rules="selectRules"
         :options="services"
       />
@@ -50,6 +51,7 @@
 import { ref, onMounted, reactive } from 'vue';
 import Table from '../ranking/TarifasTable.vue'
 
+const tipoPessoa = ["Física", "Jurídica"]
 
 export default {
   components: {
@@ -59,7 +61,8 @@ export default {
     return {
       selectValue: "",
       validation: null,
-      services:['Teste1', 'Teste2']
+      services:['Teste1', 'Teste2'],
+      tipoPessoa,
     }
 
   },

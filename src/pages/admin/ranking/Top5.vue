@@ -6,14 +6,16 @@
 
  <div style="width: 300px; display: flex; margin-top: 20px;">
 
-    <div class="mr-3">
+  <div class="mr-3">
       <va-select
-        v-model="pessoa"
+        v-model="tipoServico"
         class="mt-3"
         label="Tipo de Serviço"
         :options="tipoPessoa"
+        style="width: 200px;"
       />
     </div>
+
 
     <div class="mr-3">
       <va-select
@@ -36,9 +38,10 @@
     </div>
  </div>
 
-  
+ <div style="margin-top: 30px;">
 
-  <Table class="mt-3"></Table>
+  <Table class="mt-3" style="width: auto"></Table>
+  </div>
   
 
 </template>

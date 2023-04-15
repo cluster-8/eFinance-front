@@ -12,6 +12,8 @@ da tarifa com tendência.</p>
           class="mt-3"
           label="Tipo de Serviço"
           :options="tipoPessoa"
+          style="width: 200px;"
+
         />
         </div>
     
