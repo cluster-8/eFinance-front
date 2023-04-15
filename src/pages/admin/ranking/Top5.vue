@@ -1,12 +1,12 @@
 <template>
- <div>
-  <h3 class="va-h3">Top 5</h3>
-  <p>Selecione abaixo o tipo de serviço, o serviço e a data de início e fim do período</p>
- </div>
+  <div>
+    <h3 class="va-h3">Top 5</h3>
+    <p>Selecione abaixo o tipo de serviço, o serviço e a data de início e fim do período</p>
+  </div>
 
- <div style="width: 300px; display: flex; margin-top: 20px;">
+  <div style="width: 300px; display: flex; margin-top: 20px;">
 
-  <div class="mr-3">
+    <div class="mr-3">
       <va-select
         v-model="tipoServico"
         class="mt-3"
@@ -15,8 +15,6 @@
         style="width: 200px;"
       />
     </div>
-
-
     <div class="mr-3">
       <va-select
         v-model="value"
@@ -36,10 +34,9 @@
         label="Data de inicio e fim"
       />   
     </div>
- </div>
+  </div>
 
- <div style="margin-top: 30px;">
-
+  <div style="margin-top: 30px;">
   <Table class="mt-3" style="width: auto"></Table>
   </div>
   
