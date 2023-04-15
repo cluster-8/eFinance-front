@@ -65,11 +65,11 @@
 </template>
 
 
-<script>
-    import Table from './ComparatorTable.vue'
-    import { ref } from 'vue'
+<script lang="ts">
+  import Table from './ComparatorTable.vue'
+  import { ref } from 'vue'
 
-    const tipoServico = ref<"Pessoa Física" | "Pessoa Jurídica" | "Todos">("Pessoa Física");
+  const tipoServico = ref<"Pessoa Física" | "Pessoa Jurídica" | "Todos">("Pessoa Física");
   const tipos = ["Pessoa Física", "Pessoa Jurídica", "Todos"];
 
     export default {
