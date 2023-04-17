@@ -76,7 +76,7 @@
       return {
         selectValue: "",
         validation: null,
-        services:['Maior tarifa', 'Menor tarifa'],
+        services:['Maiores tarifas', 'Menores tarifas'],
         tipos,
         tipoServico,
         servicos,

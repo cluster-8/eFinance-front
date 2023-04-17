@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="va-h3">Top 5</h3>
-    <p>Selecione abaixo o tipo de serviço, o serviço e a data de início e fim do período</p>
+    <p>Selecione abaixo o tipo de serviço, o serviço e a data do final do período</p>
   </div>
 
   <div style="width: 300px; display: flex; margin-top: 20px;">
@@ -31,10 +31,11 @@
 
     <div class="mr-3">
       <va-date-input
-        v-model="range"
+        v-model="single"
         class="mt-3"
         :reset-on-close="false"
-        label="Data de inicio e fim"
+        label="Final do Periodo"
+        mode="single"
       />   
     </div>
   </div>
