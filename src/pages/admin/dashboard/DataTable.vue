@@ -69,8 +69,9 @@
         
       const columns = [
         { key: "servico.nome", name:'Serviço', label:'Serviço', sortable: true, sortingOptions: ["desc", "asc"] },
-        { key: "valorMaximo", name:'Valor Máximo', label:'Valor Máximo em R$', sortable: true, sortingFn: (a , b ) => a > b ? -1 : 1 },
-        { key: "dataVigencia", name:'Data de Vigência', label:'Data de Vigência', sortable: true },
+        { key: "valorMaximo", name:'Valor Máximo', label:'Valor Máximo', sortable: true, sortingFn: (a , b ) => a > b ? -1 : 1 },
+        { key: "valorMinimo", name:'Valor Mínimo', label:'Valor Mínimo', sortable: true, sortingFn: (a , b ) => a > b ? -1 : 1 },
+        { key: "dataVigencia", name:'Data de Vigência', label:'Data Vigência', sortable: true },
         { key: "unidade", name:'Unidade', sortable: true },
         { key: "periodicidade", name: 'Periodicidade', sortable: true },
       ];
