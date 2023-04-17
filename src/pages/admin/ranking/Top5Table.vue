@@ -14,11 +14,11 @@
 
             <tbody>
         <tr
-          v-for="service in services"
+          v-for="(service, index) in services"
           :key="service.id"
         >
           <td class="align-icon">
-            <div class="ranking-icon">{{ service.position }}</div></td>
+            <div class="ranking-icon">#{{ index+1 }}</div></td>
           <td class="institution-name align-table">{{ service.institution }}</td>
           <td class="maximum-value align-table">{{ service.maximumValue }}</td>
         </tr>
