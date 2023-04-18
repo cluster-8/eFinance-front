@@ -18,7 +18,7 @@
     <div class="mr-3">
       <va-select
             placeholder="Selecione o serviço desejado"
-            v-model="idServico"
+            v-model="selectedService"
             class="mt-3"
             label="Serviço"
             :options="servicosFiltrados"
@@ -57,12 +57,18 @@
   const tipos = ["Pessoa Física", "Pessoa Jurídica", "Todos"]
   const servicos = ref([])
   const servicosFiltrados = ref()
-  const idServico = ref()
+  const selectedService = ref()
+  const top5 = ref()
 
   const fetchServicos = async () => {
     let response = await api.get("servicos")
     servicos.value = response.data
     servicosFiltrados.value = response.data
+  }
+
+  const fetchTop = async (id, date, order) => {
+    let response = await api.get(`tarifas/top-5/${id}?dataFim=${date}&page=4&order=${order}`)
+    top5.value = response.data
   }
 
   const datePlusDay = (date, days) => {
@@ -82,7 +88,7 @@
         tipoServico,
         tipos,
         servicos,
-        idServico,
+        selectedService,
         servicosFiltrados,
         single: new Date(),
         range: { start: new Date(), end: nextWeek },
@@ -91,7 +97,6 @@
     },
     watch: {
       tipoServico(newValue) {
-        console.log(newValue)
         if(newValue === 'Pessoa Física'){
           servicosFiltrados.value = servicos.value.filter(item => item.tipo === 'F')
         }
@@ -103,6 +108,9 @@
         }
       },
       single(newValue) {
+      },
+      selectedService(newValue){
+        fetchTop(newValue.id,'2021-08-11','asc')
       }
     },
     setup() {
