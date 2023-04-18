@@ -4,7 +4,7 @@
     <p>Selecione abaixo o tipo de serviço, o serviço e a data do final do período</p>
   </div>
 
-  <div style="width: 300px; display: flex; margin-top: 20px;">
+  <div style="width: 18.75rem; display: flex; margin-top: 1.25rem;">
 
     <div class="mr-3">
       <va-select
@@ -12,7 +12,7 @@
         class="mt-3"
         label="Tipo de Serviço"
         :options="tipos"
-        style="width: 200px;"
+        style="width: 12.5rem;"
       />
     </div>
     <div class="mr-3">
@@ -40,8 +40,8 @@
     </div>
   </div>
 
-  <div style="margin-top: 30px;">
-  <Table class="mt-3" style="width: auto"></Table>
+  <div style="margin-top: 1.875rem;">
+  <Table class="mt-3" style="width: auto" v-bind:topFive="topFive"></Table>
   </div>
   
 
@@ -58,7 +58,8 @@
   const servicos = ref([])
   const servicosFiltrados = ref()
   const selectedService = ref()
-  const top5 = ref()
+  const topFive = ref()
+  const formatedDate = ref()
 
   const fetchServicos = async () => {
     let response = await api.get("servicos")
@@ -68,7 +69,7 @@
 
   const fetchTop = async (id, date, order) => {
     let response = await api.get(`tarifas/top-5/${id}?dataFim=${date}&page=4&order=${order}`)
-    top5.value = response.data
+    topFive.value = response.data
   }
 
   const datePlusDay = (date, days) => {
@@ -76,6 +77,14 @@
     d.setDate(d.getDate() + days);
     return d;
   };
+
+  const formatDate = (date) => {
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+    formatedDate.value = `${year}-${month}-${day}`
+  }
+  
   const nextWeek = datePlusDay(new Date(), 7);
 
   export default {
@@ -90,6 +99,8 @@
         servicos,
         selectedService,
         servicosFiltrados,
+        topFive,
+        formatedDate,
         single: new Date(),
         range: { start: new Date(), end: nextWeek },
 
@@ -108,14 +119,17 @@
         }
       },
       single(newValue) {
+        formatDate(newValue)
       },
       selectedService(newValue){
-        fetchTop(newValue.id,'2021-08-11','asc')
-      }
+        fetchTop(newValue.id,formatedDate.value,'asc')
+      },
     },
     setup() {
       onMounted(() => {
         fetchServicos()
+        let date = new Date()
+        formatDate(date)
       })
     }
   };
