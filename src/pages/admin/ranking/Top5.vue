@@ -21,7 +21,7 @@
             v-model="idServico"
             class="mt-3"
             label="Serviço"
-            :options="servicos"
+            :options="servicosFiltrados"
             :text-by="(option) => option.nome"
             style="width: 34rem;"
             search-placeholder-text="Buscar"
@@ -53,14 +53,16 @@
   import { ref } from 'vue';
   import api from '../../../services/api'
 
-  const tipoServico = ref < "Pessoa Física" | "Pessoa Jurídica" | "Todos" > ("Pessoa Física");
+  const tipoServico = ref < "Pessoa Física" | "Pessoa Jurídica" | "Todos" > ("Todos");
   const tipos = ["Pessoa Física", "Pessoa Jurídica", "Todos"]
   const servicos = ref([])
+  const servicosFiltrados = ref()
   const idServico = ref()
 
   const fetchServicos = async () => {
     let response = await api.get("servicos")
     servicos.value = response.data
+    servicosFiltrados.value = response.data
   }
 
   const datePlusDay = (date, days) => {
@@ -81,13 +83,27 @@
         tipos,
         servicos,
         idServico,
+        servicosFiltrados,
         single: new Date(),
         range: { start: new Date(), end: nextWeek },
 
       };
     },
     watch: {
-      
+      tipoServico(newValue) {
+        console.log(newValue)
+        if(newValue === 'Pessoa Física'){
+          servicosFiltrados.value = servicos.value.filter(item => item.tipo === 'F')
+        }
+        else if(newValue === 'Pessoa Jurídica'){
+          servicosFiltrados.value = servicos.value.filter(item => item.tipo === 'J')
+        }
+        else if(newValue === 'Todos'){
+          servicosFiltrados.value = servicos.value
+        }
+      },
+      single(newValue) {
+      }
     },
     setup() {
       onMounted(() => {
