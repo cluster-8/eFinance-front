@@ -38,10 +38,15 @@
         mode="single"
       />   
     </div>
+
+    
   </div>
 
   <div style="margin-top: 1.875rem;">
-  <Table class="mt-3" style="width: auto" v-bind:topFive="topFive"></Table>
+    <div style="width: 10rem;">
+      <va-alert v-if="isError" icon="info" class="" style="width: 20rem; " :description="isError" />
+    </div>
+    <Table v-if="!isError" class="mt-3" style="width: auto" v-bind:topFive="topFive"></Table>
   </div>
   
 
@@ -60,6 +65,7 @@
   const selectedService = ref()
   const topFive = ref()
   const formatedDate = ref()
+  const isError = ref(false)
 
   const fetchServicos = async () => {
     let response = await api.get("servicos")
@@ -68,8 +74,14 @@
   }
 
   const fetchTop = async (id, date, order) => {
-    let response = await api.get(`tarifas/top-5/${id}?dataFim=${date}&page=4&order=${order}`)
-    topFive.value = response.data
+    try {
+      let response = await api.get(`tarifas/top-5/${id}?dataFim=${date}&page=4&order=${order}`)
+      topFive.value = response.data
+      isError.value = false
+      
+    } catch (error) {
+      isError.value = error.response.data.message
+    }
   }
 
   const datePlusDay = (date, days) => {
@@ -101,6 +113,7 @@
         servicosFiltrados,
         topFive,
         formatedDate,
+        isError,
         single: new Date(),
         range: { start: new Date(), end: nextWeek },
 
@@ -117,6 +130,7 @@
         else if(newValue === 'Todos'){
           servicosFiltrados.value = servicos.value
         }
+        
       },
       single(newValue) {
         formatDate(newValue)
