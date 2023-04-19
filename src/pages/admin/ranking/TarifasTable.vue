@@ -8,19 +8,19 @@
               <tr>
                 <th class="align-table" style="width:15%">Posição</th>
                 <th class="align-table" style="width:70%">Instituição</th>
-                <th class="align-table" style="width:15%">Valor</th>
+                <th class="align-table" style="width:15%">Score</th>
               </tr>
             </thead>
 
             <tbody>
         <tr
-          v-for="(service, index) in services"
-          :key="service.id"
+          v-for="(institution, index) in ranking"
+          :key="institution.id"
         >
           <td class="align-icon">
             <div class="ranking-icon">#{{ index+1 }}</div></td>
-          <td class="institution-name align-table">{{ service.institution }}</td>
-          <td class="maximum-value align-table">{{ service.maximumValue }}</td>
+          <td class="institution-name align-table">{{ institution.instituicao.nome }}</td>
+          <td class="maximum-value align-table">{{ institution.scorePf }}</td>
         </tr>
       </tbody>
           </table>
@@ -30,47 +30,23 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script>
+  import { defineComponent } from "vue";
 
-export default defineComponent({
-  data() {
-    return {
-      services: [
-        {
-          id: 1,
-          position: "#1",
-          institution: "Itaú - Unibanco",
-          maximumValue: "R$100",
+  export default defineComponent({
+    props: {
+        ranking: {
+          Array
         },
-        {
-          id: 2,
-          position: "#2",
-          institution: "Bradesco",
-          maximumValue: "R$200",
-        },
-          {
-          id: 3,
-          position: "#3",
-          institution: "Santander",
-          maximumValue: "R$300",
-        },
-        {
-          id: 4,
-          position: "#4",
-          institution: "Nubank",
-          maximumValue: "R$400",
-        },
-        {
-          id: 5,
-          position: "#5",
-          institution: "Banco do Brasil",
-          maximumValue: "R$500",
-        },
-      ],
-    };
-  },
-});
+        type: {
+          String
+        }
+      },
+    data() {
+      return {
+      }
+    },
+  });
 </script>
 
 <style lang="scss">
