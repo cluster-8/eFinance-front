@@ -102,6 +102,12 @@ const fetchTarifas = async (banco) => {
 
   try {
     let response = await api.get(url);
+    response.data.forEach(element => {
+      if (element.valorMinimo == null) { 
+        element.valorMinimo = '-';
+      }
+      element.unidade = element.unidade[0].toUpperCase() + element.unidade.substring(1).toLowerCase();
+    });
     tarifas.value = response.data;
     error.value = false;
     isLoading.value = false;
