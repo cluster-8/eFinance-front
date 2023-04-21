@@ -12,7 +12,7 @@
         class="mt-3"
         label="Tipo de Serviço"
         :options="tipos"
-        style="width: 200px;"
+        style="width: 200px"
       />
     </div>
     <div class="mr-3" style="flex-grow: 1">
@@ -25,7 +25,7 @@
         :text-by="(option) => option.nome"
         search-placeholder-text="Buscar"
         searchable
-        style="width: 360px;"
+        style="width: 360px"
       />
     </div>
   </div>
@@ -44,9 +44,9 @@
     </div>
     <div v-if="isVisible && !isLoading" style="margin-top: 2rem">
       <DataTable v-bind:tarifas="tarifas"></DataTable>
-      <!-- <Table :tarifas="!error ? tarifas : ''" /> -->
     </div>
-    <div style="
+    <div
+      style="
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -71,14 +71,18 @@
 <script lang="ts">
 import { ScalingSquaresSpinner } from "epic-spinners";
 import Table from "../dashboard/DashboardTable.vue";
-import api from "../../../services/api";
 import { onBeforeMount, ref, toRaw } from "vue";
 import image from "/accountant-pana.png";
 import DataTable from "./DataTable.vue";
 
+import TariffsService from '../../../services/TariffsService'
+import FinancialInstituitionsService from '../../../services/FinancialInstituitionsService'
+
 const tarifas = ref();
 const instituicoes = ref([]);
-const tipoServico = ref<"Pessoa Física" | "Pessoa Jurídica" | "Todos">("Pessoa Física");
+const tipoServico = ref<"Pessoa Física" | "Pessoa Jurídica" | "Todos">(
+  "Pessoa Física"
+);
 const tipos = ["Pessoa Física", "Pessoa Jurídica", "Todos"];
 const banco = ref();
 const error = ref(false);
@@ -87,9 +91,30 @@ const isLoading = ref(false);
 
 const fetchInstituicoes = async () => {
   isLoading.value = true;
-  let response = await api.get("instituicoes");
-  instituicoes.value = response.data;
+  const { data } = await FinancialInstituitionsService.getAll()
+  instituicoes.value = data
   isLoading.value = false;
+};
+
+const parseTariffsData = (tariffs) => {
+  if (!tariffs) return;
+  tariffs.forEach((element) => {
+    // handle valorMinimo null values
+    if (element.valorMinimo == null) {
+      element.valorMinimo = "-";
+    }
+
+    // handle unidade case
+    element.unidade =
+      element.unidade[0].toUpperCase() +
+      element.unidade.substring(1).toLowerCase();
+
+    // handle dataVigencia locale date
+    element.dataVigencia = new Date(element.dataVigencia).toLocaleDateString(
+      "pt-BR"
+    );
+  });
+  return tariffs
 };
 
 const fetchTarifas = async (banco) => {
@@ -97,18 +122,13 @@ const fetchTarifas = async (banco) => {
   if (!banco) return;
   let id = toRaw(banco.id);
 
-  let tipo = ((tipoServico.value == "Todos") ? "" : `?tipo=${tipoServico.value.charAt(7)}`);
-  let url = `instituicao/tarifas/${id}${tipo}`
+  let tipo =
+    tipoServico.value == "Todos" ? "" : `?tipo=${tipoServico.value.charAt(7)}`;
 
   try {
-    let response = await api.get(url);
-    response.data.forEach(element => {
-      if (element.valorMinimo == null) { 
-        element.valorMinimo = '-';
-      }
-      element.unidade = element.unidade[0].toUpperCase() + element.unidade.substring(1).toLowerCase();
-    });
-    tarifas.value = response.data;
+    const { data } = await TariffsService.getByIdAndServiceType(id, tipo)
+    const tariffs = parseTariffsData(data)
+    tarifas.value = tariffs
     error.value = false;
     isLoading.value = false;
     isVisible.value = true;
@@ -152,7 +172,6 @@ export default {
       fetchInstituicoes();
       isVisible.value = false;
       if (banco.value) fetchTarifas(banco.value);
-
     });
   },
 };
