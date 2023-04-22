@@ -7,8 +7,8 @@
             <thead>
               <tr>
                 <th class="align-table" style="width:15%">Posição</th>
-                <th class="align-table" style="width:70%">Instituição</th>
-                <th class="align-table" style="width:15%">Valor</th>
+                <th class="align-table" style="width:70%">Instituição Financeira</th>
+                <th class="align-table" style="width:15%">Valor (R$)</th>
               </tr>
             </thead>
 
