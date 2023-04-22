@@ -43,13 +43,24 @@
       style="width: auto"
     ></Table>
   </div>
+  <div class="pagination-container">
+    <va-pagination
+      v-model="currentPage"
+      :pages="totalPages"
+      :visible-pages="3"
+      buttons-preset="secondary"
+      rounded
+      gapped
+      border-color="primary"
+    />
+  </div>
 </template>
 
 <script lang="ts">
 import { ref, onMounted } from "vue";
 import Table from "../ranking/TarifasTable.vue";
 import ScoresService from "../../../services/ScoresService";
-import { ServiceType, RankType } from "../../../types";
+import { ServiceType, RankType, RankedFinancialInstituition } from "../../../types";
 
 const tipoServico = ref<ServiceType>(ServiceType.All);
 const tipos: ServiceType[] = [
@@ -57,9 +68,11 @@ const tipos: ServiceType[] = [
   ServiceType.JuridicalPerson,
   ServiceType.All,
 ];
-const ranking = ref<any>();
+const ranking = ref<RankedFinancialInstituition[]>();
 const rankType = ref<RankType>(RankType.LowerTariffs);
 const isError = ref<boolean>(false);
+const currentPage = ref<number>(1);
+const totalPages = ref<number>(1)
 
 const fetchRank = async (
   serviceType: ServiceType,
@@ -77,13 +90,26 @@ const fetchRank = async (
   }
 
   try {
-    const { data } = await ScoresService.getAll(order, pessoa);
+    const { data } = await ScoresService.getAll(
+      order,
+      pessoa,
+      currentPage.value
+    );
     ranking.value = data;
+    setTotalPages();
     isError.value = false;
   } catch (error) {
     isError.value = error.response.data.message;
   }
 };
+
+const setTotalPages = () => {
+  if (!ranking.value) return
+  if (ranking.value.length < 20) {
+    return totalPages.value = currentPage.value
+  }
+  return totalPages.value = currentPage.value + 2
+}
 
 export default {
   components: {
@@ -91,24 +117,31 @@ export default {
   },
   data() {
     return {
-      isError,
-      rankType,
+      groupedProps: { ranking: ranking, type: tipoServico, currentPage: currentPage },
       services: ["Menores tarifas", "Maiores tarifas"],
-      tipos,
       tipoServico,
+      currentPage,
+      totalPages,
+      rankType,
+      isError,
       ranking,
-      groupedProps: {ranking: ranking, type: tipoServico}
+      tipos,
     };
   },
   watch: {
     tipoServico: {
       handler: (newValue: ServiceType) => {
-        fetchRank(newValue, rankType.value)
+        fetchRank(newValue, rankType.value);
       },
       immediate: true,
     },
     rankType: {
       handler: (newValue: RankType) => fetchRank(tipoServico.value, newValue),
+      immediate: true,
+    },
+    currentPage: {
+      handler: (newValue: number) =>
+        fetchRank(tipoServico.value, rankType.value),
       immediate: true,
     },
   },
@@ -119,3 +152,14 @@ export default {
   },
 };
 </script>
+
+<style>
+.pagination-container {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+</style>
