@@ -44,11 +44,17 @@
 
   <div style="margin-top: 1.875rem;">
     <div style="width: 10rem;">
-      <va-alert v-if="isError" icon="info" class="" style="width: 20rem; " :description="isError" />
+      <va-alert v-if="isError" icon="info" class="" style="width: 24rem;" :description="isError" />
     </div>
-    <Table v-if="!isError" class="mt-3" style="width: auto" v-bind:topFive="topFive"></Table>
+    <Table v-if="!isError && isVisible" class="mt-3" style="width: auto" v-bind:topFive="topFive"></Table>
   </div>
   
+  <va-image
+    v-if = "!isVisible || isError"
+    class=""
+    :src="image"
+    style="width: 43.75rem; height: auto; margin-left: 25%; margin-top: -2rem; "
+  />
 
 </template>
 
@@ -57,6 +63,7 @@
   import Table from '../ranking/Top5Table.vue'
   import { ref } from 'vue';
   import api from '../../../services/api'
+  import image from "/finance-leaders-rafiki.png";
 
   const tipoServico = ref < "Pessoa Física" | "Pessoa Jurídica" | "Todos" > ("Todos");
   const tipos = ["Pessoa Física", "Pessoa Jurídica", "Todos"]
@@ -66,6 +73,7 @@
   const topFive = ref()
   const formatedDate = ref()
   const isError = ref(false)
+  const isVisible = ref(false)
 
   const fetchServicos = async () => {
     let response = await api.get("servicos")
@@ -78,6 +86,7 @@
       let response = await api.get(`tarifas/top-5/${id}?dataFim=${date}&page=4&order=${order}`)
       topFive.value = response.data
       isError.value = false
+      isVisible.value = true
       
     } catch (error) {
       isError.value = error.response.data.message
@@ -116,7 +125,8 @@
         isError,
         single: new Date(),
         range: { start: new Date(), end: nextWeek },
-
+        image,
+        isVisible
       };
     },
     watch: {

@@ -62,7 +62,7 @@
       <va-image
         class="w-full md:w-1/2 lg:w-1/3"
         :src="image"
-        style="width: 700px"
+        style="width: 43.75rem"
       />
     </div>
   </div>
