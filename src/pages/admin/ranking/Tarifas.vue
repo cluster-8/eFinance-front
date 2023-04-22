@@ -38,8 +38,7 @@
     </div>
     <Table
       v-if="!isError"
-      v-bind:ranking="ranking"
-      type="tipoServico"
+      v-bind:groupedProps="groupedProps"
       class="mt-3"
       style="width: auto"
     ></Table>
@@ -98,11 +97,14 @@ export default {
       tipos,
       tipoServico,
       ranking,
+      groupedProps: {ranking: ranking, type: tipoServico}
     };
   },
   watch: {
     tipoServico: {
-      handler: (newValue: ServiceType) => fetchRank(newValue, rankType.value),
+      handler: (newValue: ServiceType) => {
+        fetchRank(newValue, rankType.value)
+      },
       immediate: true,
     },
     rankType: {
