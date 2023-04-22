@@ -10,11 +10,33 @@ enum RankType {
 }
 
 type FinancialService = {
-  id: string
-  nome: string
-  codigo: string
-  tipo: string
-  createdAt: Date
-}
+  id: string;
+  nome: string;
+  codigo: string;
+  tipo: string;
+  createdAt: Date;
+};
 
-export { ServiceType, RankType, FinancialService };
+type FinancialInstituition = {
+  id: string;
+  nome: string;
+  cnpj: string;
+  cnpjFormatado: string;
+  createdAt: Date;
+};
+
+type RankedFinancialInstituition = {
+  id: string;
+  instituicao: FinancialInstituition;
+  scorePf: number;
+  scorePj: number;
+  scoreTtl: number;
+};
+
+export {
+  ServiceType,
+  RankType,
+  FinancialService,
+  FinancialInstituition,
+  RankedFinancialInstituition,
+};
