@@ -9,4 +9,12 @@ enum RankType {
   HigherTariffs = "Maiores tarifas",
 }
 
-export { ServiceType, RankType };
+type FinancialService = {
+  id: string
+  nome: string
+  codigo: string
+  tipo: string
+  createdAt: Date
+}
+
+export { ServiceType, RankType, FinancialService };
