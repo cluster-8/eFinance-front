@@ -1,0 +1,8 @@
+{
+    "bancos": [
+        {
+            "id": 1,
+            "nome": "Santander"
+        }
+    ]
+}
