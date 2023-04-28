@@ -7,20 +7,20 @@
             <thead>
               <tr>
                 <th class="align-table" style="width:15%">Posição</th>
-                <th class="align-table" style="width:70%">Instituição</th>
-                <th class="align-table" style="width:15%">Valor Máximo</th>
+                <th class="align-table" style="width:70%">Instituição Financeira</th>
+                <th class="align-table" style="width:15%">Valor (R$)</th>
               </tr>
             </thead>
 
             <tbody>
         <tr
-          v-for="service in services"
-          :key="service.id"
+          v-for="(item, index) in topFive"
+          :key="item.id"
         >
           <td class="align-icon">
-            <div class="ranking-icon">{{ service.position }}</div></td>
-          <td class="institution-name align-table">{{ service.institution }}</td>
-          <td class="maximum-value align-table">{{ service.maximumValue }}</td>
+            <div class="ranking-icon">#{{ index+1 }}</div></td>
+          <td class="institution-name align-table">{{ item.instituicao.nome }}</td>
+          <td class="maximum-value align-table">{{ item.valorMaximo }}</td>
         </tr>
       </tbody>
           </table>
@@ -30,44 +30,18 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  props: {
+      topFive: {
+        Array
+      }
+    },
   data() {
     return {
-      services: [
-        {
-          id: 1,
-          position: "#1",
-          institution: "Itaú - Unibanco",
-          maximumValue: "R$100",
-        },
-        {
-          id: 2,
-          position: "#2",
-          institution: "Bradesco",
-          maximumValue: "R$200",
-        },
-          {
-          id: 3,
-          position: "#3",
-          institution: "Santander",
-          maximumValue: "R$300",
-        },
-        {
-          id: 4,
-          position: "#4",
-          institution: "Nubank",
-          maximumValue: "R$400",
-        },
-        {
-          id: 5,
-          position: "#5",
-          institution: "Banco do Brasil",
-          maximumValue: "R$500",
-        },
-      ],
+     
     };
   },
 });
@@ -87,8 +61,8 @@ export default defineComponent({
     display: flex;
     background-color: #0050C0;
     text-align: center;
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
@@ -96,7 +70,6 @@ export default defineComponent({
     vertical-align: middle;
   }
   .institution-name {
-    font-size: 20px;
     vertical-align: middle;
   }
 
@@ -111,7 +84,6 @@ export default defineComponent({
   }
 
   .maximum-value {
-    font-size: 18px;
     vertical-align: middle;
   }
 }
