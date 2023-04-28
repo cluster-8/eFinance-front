@@ -1,8 +1,23 @@
 {
-    "bancos": [
+  "comparador": [
+    {
+      "servicoId": "fdf6f151-4e4a-4640-a918-9a8c672ae710",
+      "instituicoes": [
         {
-            "id": 1,
-            "nome": "Santander"
+          "instituicaoId": "ff9c701f-cf7c-4809-a0f0-e407f6eda49e",
+          "valorMaximo": 45.5,
+          "moeda": "Real",
+          "unidade": "por cliente",
+          "dataVigencia": "2021-01-04"
+        },
+        {
+          "instituicaoId": "ff7c2676-a870-4398-a91e-4cdfa81056c4",
+          "valorMaximo": 24.98,
+          "moeda": "Real",
+          "unidade": "por cliente",
+          "dataVigencia": "2017-11-25"
         }
-    ]
+      ]
+    }
+  ]
 }
