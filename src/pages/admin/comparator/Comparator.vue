@@ -72,8 +72,9 @@
 
 <script lang="ts">
   import Table from './ComparatorTable.vue'
-  import { ref } from 'vue'
+  import { ref, toRaw } from 'vue'
   import api from '../../../services/api'
+  import ComparatorService from '../../../services/ComparatorService';
   import { onMounted } from 'vue';
 
   const tipoServico = ref<"Pessoa Física" | "Pessoa Jurídica" | "Todos">("Pessoa Física");
@@ -83,6 +84,7 @@
   const banco1 = ref()
   const banco2 = ref()
   const idServico = ref()
+  const error = ref(false)
   
   const fetchInstituicoes = async () => {
     let response = await api.get("instituicoes");
@@ -92,6 +94,20 @@
   const fetchServicos = async () => {
     let response = await api.get("servicos")
     servicos.value = response.data
+  }
+
+  const fetchComparator = async (id1:any, id2: any, serviceId: any) => {
+    if (!id1 || !id2 || !serviceId) return;
+    id1 = toRaw(id1.id)
+    id2 = toRaw(id2.id)
+    serviceId = toRaw(serviceId.id)
+
+    try {
+      const response = await ComparatorService.getByIdsAndServiceId(id1, id2, serviceId)
+      console.log(response.data)
+    } catch (e) {
+      error.value = e.response.data.message
+    }
   }
 
   export default {
@@ -106,13 +122,32 @@
         banco2,
         instituicoes,
         servicos,
-        idServico
+        idServico,
+        error
       }
   
     },
     watch: {
-
+      banco1: {
+        handler: (newValue) => {
+          fetchComparator(newValue, banco2.value, idServico.value)
+        },
+        immediate: true,
+      },
+      banco2: {
+        handler: (newValue) => {
+          fetchComparator(banco1.value, newValue, idServico.value)
+        },
+        immediate: true,
+      },
+      idServico: {
+        handler: (newValue) => {
+          fetchComparator(banco1.value, banco2.value, newValue)
+        },
+        immediate: true
+      }
     },
+    
     setup() {
       onMounted(() => {
         fetchInstituicoes()
