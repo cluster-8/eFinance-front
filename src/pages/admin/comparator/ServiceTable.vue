@@ -25,43 +25,39 @@
         </va-card-content>
       </va-card>
     </div>
-  </template>
+</template>
   
-  <script setup lang="ts">
-  import { ref } from 'vue'
-  import { useI18n } from 'vue-i18n'
-  import data from '../../../data/tables/markup-table/data.json'
-  
-  const { t } = useI18n()
-  
-  const users = ref(data.slice(0, 8))
-  
-  function getStatusColor(status: string) {
-    if (status === 'paid') {
-      return 'success'
+<script>
+  import { defineComponent } from 'vue';
+
+
+  export default defineComponent({
+    props: {
+      groupedProps: {
+        payload: Object,
+        serviceName: String,
+      }
+    },
+    data() {
+      return {
+      }
     }
-  
-    if (status === 'processing') {
-      return 'info'
-    }
-  
-    return 'danger'
-  }
-  </script>
-  
-  <style lang="scss">
-  .markup-tables {
-    .table-wrapper {
-      overflow: auto;
-    }
-  
-    .va-table {
-      width: 100%;
-    }
-  }
-  </style>
-  
-  
-  
-  
-  
+  })
+
+</script>
+
+<style lang="scss">
+.markup-tables {
+.table-wrapper {
+    overflow: auto;
+}
+
+.va-table {
+    width: 100%;
+}
+}
+</style>
+
+
+
+

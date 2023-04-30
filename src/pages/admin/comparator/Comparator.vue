@@ -17,7 +17,7 @@
     <div class="mr-5">
       <va-select
           placeholder="Selecione o serviço desejado"
-          v-model="idServico"
+          v-model="serviceId"
           class="mt-3"
           label="Serviço"
           :options="servicos"
@@ -26,7 +26,7 @@
           search-placeholder-text="Buscar"
           searchable
       />
-      <Table style="width: auto; margin-top: 4rem;"></Table>
+      <ServiceTable v-bind="payload" style="width: auto; margin-top: 4rem;"></ServiceTable>
 
     </div>
 
@@ -44,7 +44,7 @@
           style="width: 20rem;"
 
       />
-      <Table style="width: auto; margin-top: 4rem;"></Table>
+      <Bank1Table v-bind="payload" style="width: auto; margin-top: 4rem;"></Bank1Table>
 
     </div>
 
@@ -59,8 +59,8 @@
         search-placeholder-text="Buscar"
         searchable
         style="width: 20rem;"
-    />
-    <Table style="width: auto; margin-top: 4rem;"></Table>
+      />
+      <Bank2Table v-bind="payload" style="width: auto; margin-top: 4rem;"></Bank2Table>
 
     </div>
     
@@ -71,7 +71,9 @@
 
 
 <script lang="ts">
-  import Table from './ComparatorTable.vue'
+  import ServiceTable from './ServiceTable.vue'
+  import Bank1Table from './Bank1Table.vue'
+  import Bank2Table from './Bank2Table.vue'
   import { ref, toRaw } from 'vue'
   import api from '../../../services/api'
   import ComparatorService from '../../../services/ComparatorService';
@@ -83,8 +85,9 @@
   const servicos = ref([])
   const banco1 = ref()
   const banco2 = ref()
-  const idServico = ref()
+  const serviceId = ref()
   const error = ref(false)
+  const payload = ref([])
   
   const fetchInstituicoes = async () => {
     let response = await api.get("instituicoes");
@@ -104,6 +107,7 @@
 
     try {
       const response = await ComparatorService.getByIdsAndServiceId(id1, id2, serviceId)
+      payload.value = response.data
       console.log(response.data)
     } catch (e) {
       error.value = e.response.data.message
@@ -112,7 +116,9 @@
 
   export default {
     components: {
-      Table
+      ServiceTable,
+      Bank1Table,
+      Bank2Table
     },
     data() {
       return {
@@ -122,25 +128,26 @@
         banco2,
         instituicoes,
         servicos,
-        idServico,
-        error
+        serviceId,
+        error,
+        payload
       }
   
     },
     watch: {
       banco1: {
         handler: (newValue) => {
-          fetchComparator(newValue, banco2.value, idServico.value)
+          fetchComparator(newValue, banco2.value, serviceId.value)
         },
         immediate: true,
       },
       banco2: {
         handler: (newValue) => {
-          fetchComparator(banco1.value, newValue, idServico.value)
+          fetchComparator(banco1.value, newValue, serviceId.value)
         },
         immediate: true,
       },
-      idServico: {
+      serviceId: {
         handler: (newValue) => {
           fetchComparator(banco1.value, banco2.value, newValue)
         },
