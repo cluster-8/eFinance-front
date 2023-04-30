@@ -25,6 +25,8 @@
           style="width: 34rem;"
           search-placeholder-text="Buscar"
           searchable
+          multiple
+          :max-visible-options="1"
       />
       <ServiceTable v-bind:groupedProps="serviceProps" style="width: auto; margin-top: 4rem;"></ServiceTable>
 
