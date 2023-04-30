@@ -6,18 +6,21 @@
           <table class="va-table va-table--striped va-table--hoverable">
 
             <thead>
-              <th>{{ groupedProps.serviceName }}</th>
+              <th>{{ bankPayload.nome }}</th>
             </thead>
 
             <tbody>
               <tr>
-                <td>my text 1</td>
+                <td>{{ bankPayload.valorMaximo }}</td>
               </tr>
               <tr>
-                <td>my text 1</td>
+                <td>{{ bankPayload.moeda }}</td>
               </tr>
               <tr>
-                <td>my text 1</td>
+                <td>{{ bankPayload.unidade }}</td>
+              </tr>
+              <tr>
+                <td>{{ bankPayload.dataVigencia }}</td>
               </tr>
             </tbody>
           </table>
@@ -33,12 +36,9 @@
 
   export default defineComponent({
     props: {
-      groupedProps: {
-        payload: Object,
-        serviceName: Object,
-        bank1Name: Object,
-        bank2Name: Object
-      }
+      bankPayload: {
+        Object,
+      },
     },
     data() {
       return {

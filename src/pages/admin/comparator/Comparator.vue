@@ -44,7 +44,7 @@
           style="width: 20rem;"
 
       />
-      <BankTable v-bind:groupedProps="groupedProps" style="width: auto; margin-top: 4rem;"></BankTable>
+      <BankTable v-bind:bankPayload="bank1Payload" style="width: auto; margin-top: 4rem;"></BankTable>
 
     </div>
 
@@ -60,7 +60,7 @@
         searchable
         style="width: 20rem;"
       />
-      <BankTable v-bind:groupedProps="groupedProps" style="width: auto; margin-top: 4rem;"></BankTable>
+      <BankTable v-bind:bankPayload="bank2Payload" style="width: auto; margin-top: 4rem;"></BankTable>
 
     </div>
     
@@ -87,9 +87,9 @@
   const service = ref()
   const error = ref(false)
   const payload = ref([])
-  const bank1Name = ref()
-  const bank2Name = ref()
   const serviceName = ref()
+  const bank1Payload = ref([])
+  const bank2Payload = ref([])
   
   const fetchInstituicoes = async () => {
     let response = await api.get("instituicoes");
@@ -106,15 +106,15 @@
     let id1 = toRaw(bank1.id)
     let id2 = toRaw(bank2.id)
     let serviceId = toRaw(service.id)
-    bank1Name.value = toRaw(bank1.nome)
-    bank2Name.value = toRaw(bank2.nome)
     serviceName.value = toRaw(service.nome)
-    console.log(bank1Name.value, bank2Name.value)
 
     try {
       const response = await ComparatorService.getByIdsAndServiceId(id1, id2, serviceId)
       payload.value = response.data
       console.log(response.data)
+      
+      bank1Payload.value = response.data[0].instituicoes[0], response.data[0].instituicoes[0].nome = toRaw(bank1.nome)
+      bank2Payload.value = response.data[0].instituicoes[1], response.data[0].instituicoes[1].nome = toRaw(bank2.nome)
     } catch (e) {
       error.value = e.response.data.message
     }
@@ -136,9 +136,9 @@
         service,
         error,
         payload,
-        serviceProps: { payload: payload, serviceName: serviceName, bank1Name: bank1Name, bank2Name: bank2Name },
-        groupedProps: { payload: payload, serviceName: serviceName, bank1Name: bank1Name, bank2Name: bank2Name }
-
+        serviceProps: { payload: payload, bank1Payload: bank1Payload, bank2Payload: bank2Payload, serviceName: serviceName },
+        bank1Payload,
+        bank2Payload
       }
   
     },

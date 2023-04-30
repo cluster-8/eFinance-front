@@ -9,15 +9,24 @@
                     <th>{{ groupedProps.serviceName }}</th>
                 </thead>
                 
-               <!--  {{ groupedProps.payload[0].instituicoes[0] }} -->
               <tbody>
                 <tr>
-                    <td>my text 1</td>
+                  <td>Valor Máximo</td>
                 </tr>
-               <!--  <tr v-for="(value, key) in groupedProps.payload[0].instituicoes[0]">
+                <tr>
+                  <td>Moeda</td>
+                </tr>
+                <tr>
+                  <td>Unidade</td>
+                </tr>
+                <tr>
+                  <td>Data de Vigência</td>
+                </tr>
+              <!--   
+                <tr v-for="(value, key) in groupedProps.bank1Payload">
                     <td>{{ key }}: {{ value }}</td>
-                </tr> -->
-                
+                </tr>
+                 -->
               </tbody>
             </table>
           </div>
@@ -34,10 +43,9 @@
     props: {
       groupedProps: {
         payload: Object,
-        serviceName: Object,
-        serviceList: Object,
-        bank1Name: Object,
-        bank2Name: Object
+        bank1Payload: Object,
+        bank2Payload: Object,
+        serviceName: Object
       }
     },
     data() {
