@@ -26,7 +26,7 @@
           search-placeholder-text="Buscar"
           searchable
       />
-      <ServiceTable v-bind:groupedProps="groupedProps" style="width: auto; margin-top: 4rem;"></ServiceTable>
+      <ServiceTable v-bind:groupedProps="serviceProps" style="width: auto; margin-top: 4rem;"></ServiceTable>
 
     </div>
 
@@ -44,7 +44,7 @@
           style="width: 20rem;"
 
       />
-      <Bank1Table v-bind:groupedProps="groupedProps" style="width: auto; margin-top: 4rem;"></Bank1Table>
+      <BankTable v-bind:groupedProps="groupedProps" style="width: auto; margin-top: 4rem;"></BankTable>
 
     </div>
 
@@ -60,7 +60,7 @@
         searchable
         style="width: 20rem;"
       />
-      <Bank2Table v-bind:groupedProps="groupedProps" style="width: auto; margin-top: 4rem;"></Bank2Table>
+      <BankTable v-bind:groupedProps="groupedProps" style="width: auto; margin-top: 4rem;"></BankTable>
 
     </div>
     
@@ -72,8 +72,7 @@
 
 <script lang="ts">
   import ServiceTable from './ServiceTable.vue'
-  import Bank1Table from './Bank1Table.vue'
-  import Bank2Table from './Bank2Table.vue'
+  import BankTable from './BankTable.vue'
   import { ref, toRaw } from 'vue'
   import api from '../../../services/api'
   import ComparatorService from '../../../services/ComparatorService';
@@ -124,8 +123,7 @@
   export default {
     components: {
       ServiceTable,
-      Bank1Table,
-      Bank2Table
+      BankTable,
     },
     data() {
       return {
@@ -138,7 +136,9 @@
         service,
         error,
         payload,
-        groupedProps: {payload: payload, serviceName: serviceName, bank1Name: bank1Name, bank2Name: bank2Name}
+        serviceProps: { payload: payload, serviceName: serviceName, bank1Name: bank1Name, bank2Name: bank2Name },
+        groupedProps: { payload: payload, serviceName: serviceName, bank1Name: bank1Name, bank2Name: bank2Name }
+
       }
   
     },

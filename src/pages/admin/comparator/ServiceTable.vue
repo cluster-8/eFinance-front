@@ -8,17 +8,16 @@
                 <thead>
                     <th>{{ groupedProps.serviceName }}</th>
                 </thead>
-  
+                
+               <!--  {{ groupedProps.payload[0].instituicoes[0] }} -->
               <tbody>
                 <tr>
                     <td>my text 1</td>
                 </tr>
-                <tr>
-                    <td>my text 1</td>
-                </tr>
-                <tr>
-                    <td>my text 1</td>
-                </tr>
+               <!--  <tr v-for="(value, key) in groupedProps.payload[0].instituicoes[0]">
+                    <td>{{ key }}: {{ value }}</td>
+                </tr> -->
+                
               </tbody>
             </table>
           </div>
@@ -36,6 +35,7 @@
       groupedProps: {
         payload: Object,
         serviceName: Object,
+        serviceList: Object,
         bank1Name: Object,
         bank2Name: Object
       }
