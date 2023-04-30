@@ -1,27 +1,19 @@
 <template>
-    <div class="markup-tables flex">
+    <div class="markup-tables flex" style="max-width: fit-content;">
       <va-card>
         <va-card-content>
           <div class="table-wrapper">
             <table class="va-table va-table--striped va-table--hoverable">
               
                 <thead>
-                    <th>{{ groupedProps.serviceName }}</th>
+                    <th>Serviços</th>
                 </thead>
                 
               <tbody>
                 <tr>
-                  <td>Valor Máximo</td>
+                  <td>{{groupedProps.serviceName}}</td>
                 </tr>
-                <tr>
-                  <td>Moeda</td>
-                </tr>
-                <tr>
-                  <td>Unidade</td>
-                </tr>
-                <tr>
-                  <td>Data de Vigência</td>
-                </tr>
+                
               <!--   
                 <tr v-for="(value, key) in groupedProps.bank1Payload">
                     <td>{{ key }}: {{ value }}</td>
@@ -60,10 +52,6 @@
   .markup-tables {
     .table-wrapper {
       overflow: auto;
-    }
-
-    .va-table {
-      width: 100%;
     }
   }
 </style>

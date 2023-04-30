@@ -13,15 +13,8 @@
               <tr>
                 <td>{{ bankPayload.valorMaximo }}</td>
               </tr>
-              <tr>
-                <td>{{ bankPayload.moeda }}</td>
-              </tr>
-              <tr>
-                <td>{{ bankPayload.unidade }}</td>
-              </tr>
-              <tr>
-                <td>{{ bankPayload.dataVigencia }}</td>
-              </tr>
+            
+
             </tbody>
           </table>
         </div>
