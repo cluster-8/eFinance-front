@@ -17,7 +17,7 @@
     <div class="mr-5">
       <va-select
           placeholder="Selecione o serviço desejado"
-          v-model="serviceId"
+          v-model="service"
           class="mt-3"
           label="Serviço"
           :options="servicos"
@@ -85,7 +85,7 @@
   const servicos = ref([])
   const bank1 = ref()
   const bank2 = ref()
-  const serviceId = ref()
+  const service = ref()
   const error = ref(false)
   const payload = ref([])
   const bank1Name = ref()
@@ -109,7 +109,7 @@
     let serviceId = toRaw(service.id)
     bank1Name.value = toRaw(bank1.nome)
     bank2Name.value = toRaw(bank2.nome)
-    serviceName.value = toRaw(service.name)
+    serviceName.value = toRaw(service.nome)
     console.log(bank1Name.value, bank2Name.value)
 
     try {
@@ -135,7 +135,7 @@
         bank2,
         instituicoes,
         servicos,
-        serviceId,
+        service,
         error,
         payload,
         groupedProps: {payload: payload, serviceName: serviceName, bank1Name: bank1Name, bank2Name: bank2Name}
@@ -145,22 +145,24 @@
     watch: {
       bank1: {
         handler: (newValue) => {
-          fetchComparator(newValue, bank2.value, serviceId.value)
+          fetchComparator(newValue, bank2.value, service.value)
         },
         immediate: true,
       },
       bank2: {
         handler: (newValue) => {
-          fetchComparator(bank1.value, newValue, serviceId.value)
+          fetchComparator(bank1.value, newValue, service.value)
         },
         immediate: true,
       },
-      serviceId: {
+      service: {
         handler: (newValue) => {
           fetchComparator(bank1.value, bank2.value, newValue)
         },
         immediate: true
-      }
+      },
+      
+
     },
     
     setup() {
