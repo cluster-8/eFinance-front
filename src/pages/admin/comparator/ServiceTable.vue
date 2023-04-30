@@ -6,7 +6,7 @@
             <table class="va-table va-table--striped va-table--hoverable">
               
                 <thead>
-                    <th>Example</th>
+                    <th>{{ groupedProps.serviceName }}</th>
                 </thead>
   
               <tbody>
@@ -35,7 +35,9 @@
     props: {
       groupedProps: {
         payload: Object,
-        serviceName: String,
+        serviceName: Object,
+        bank1Name: Object,
+        bank2Name: Object
       }
     },
     data() {
@@ -47,15 +49,15 @@
 </script>
 
 <style lang="scss">
-.markup-tables {
-.table-wrapper {
-    overflow: auto;
-}
+  .markup-tables {
+    .table-wrapper {
+      overflow: auto;
+    }
 
-.va-table {
-    width: 100%;
-}
-}
+    .va-table {
+      width: 100%;
+    }
+  }
 </style>
 
 

@@ -26,7 +26,7 @@
           search-placeholder-text="Buscar"
           searchable
       />
-      <ServiceTable v-bind="payload" style="width: auto; margin-top: 4rem;"></ServiceTable>
+      <ServiceTable v-bind:groupedProps="groupedProps" style="width: auto; margin-top: 4rem;"></ServiceTable>
 
     </div>
 
@@ -34,7 +34,7 @@
 
       <va-select
           placeholder="Selecione a Instituição"
-          v-model="banco1"
+          v-model="bank1"
           class="mt-3"
           label="Instituição Financeira 1"
           :options="instituicoes"
@@ -44,14 +44,14 @@
           style="width: 20rem;"
 
       />
-      <Bank1Table v-bind="payload" style="width: auto; margin-top: 4rem;"></Bank1Table>
+      <Bank1Table v-bind:groupedProps="groupedProps" style="width: auto; margin-top: 4rem;"></Bank1Table>
 
     </div>
 
     <div class="">
       <va-select
         placeholder="Selecione a Instituição"
-        v-model="banco2"
+        v-model="bank2"
         class="mt-3 mr-3"
         label="Instituição Financeira 2"
         :options="instituicoes"
@@ -60,7 +60,7 @@
         searchable
         style="width: 20rem;"
       />
-      <Bank2Table v-bind="payload" style="width: auto; margin-top: 4rem;"></Bank2Table>
+      <Bank2Table v-bind:groupedProps="groupedProps" style="width: auto; margin-top: 4rem;"></Bank2Table>
 
     </div>
     
@@ -83,11 +83,14 @@
   const tipos = ["Pessoa Física", "Pessoa Jurídica", "Todos"]
   const instituicoes = ref([])
   const servicos = ref([])
-  const banco1 = ref()
-  const banco2 = ref()
+  const bank1 = ref()
+  const bank2 = ref()
   const serviceId = ref()
   const error = ref(false)
   const payload = ref([])
+  const bank1Name = ref()
+  const bank2Name = ref()
+  const serviceName = ref()
   
   const fetchInstituicoes = async () => {
     let response = await api.get("instituicoes");
@@ -99,11 +102,15 @@
     servicos.value = response.data
   }
 
-  const fetchComparator = async (id1:any, id2: any, serviceId: any) => {
-    if (!id1 || !id2 || !serviceId) return;
-    id1 = toRaw(id1.id)
-    id2 = toRaw(id2.id)
-    serviceId = toRaw(serviceId.id)
+  const fetchComparator = async (bank1:any, bank2: any, service: any) => {
+    if (!bank1 || !bank2 || !service) return;
+    let id1 = toRaw(bank1.id)
+    let id2 = toRaw(bank2.id)
+    let serviceId = toRaw(service.id)
+    bank1Name.value = toRaw(bank1.nome)
+    bank2Name.value = toRaw(bank2.nome)
+    serviceName.value = toRaw(service.name)
+    console.log(bank1Name.value, bank2Name.value)
 
     try {
       const response = await ComparatorService.getByIdsAndServiceId(id1, id2, serviceId)
@@ -124,32 +131,33 @@
       return {
         tipoServico,
         tipos,
-        banco1,
-        banco2,
+        bank1,
+        bank2,
         instituicoes,
         servicos,
         serviceId,
         error,
-        payload
+        payload,
+        groupedProps: {payload: payload, serviceName: serviceName, bank1Name: bank1Name, bank2Name: bank2Name}
       }
   
     },
     watch: {
-      banco1: {
+      bank1: {
         handler: (newValue) => {
-          fetchComparator(newValue, banco2.value, serviceId.value)
+          fetchComparator(newValue, bank2.value, serviceId.value)
         },
         immediate: true,
       },
-      banco2: {
+      bank2: {
         handler: (newValue) => {
-          fetchComparator(banco1.value, newValue, serviceId.value)
+          fetchComparator(bank1.value, newValue, serviceId.value)
         },
         immediate: true,
       },
       serviceId: {
         handler: (newValue) => {
-          fetchComparator(banco1.value, banco2.value, newValue)
+          fetchComparator(bank1.value, bank2.value, newValue)
         },
         immediate: true
       }
