@@ -89,7 +89,7 @@
   const service = ref([])
   const error = ref(false)
   const payload = ref([])
-  const serviceName = ref()
+  const serviceName = ref([])
   const bank1Payload = ref([])
   const bank2Payload = ref([])
   const idList = ref()
@@ -99,10 +99,17 @@
     service.forEach(element => {
       console.log(typeof(element.id))
       ids = ids.concat(", ", element.id)
-      
     });
     return ids.slice(2)
+  }
 
+  const getServiceNames = (service) => {
+    let nameList = []
+    service.forEach(element => {
+      nameList.push(element.nome)
+    })
+
+    return nameList
   }
 
   const fetchInstituicoes = async () => {
@@ -118,6 +125,8 @@
   const fetchComparator = async (bank1:any, bank2: any, services: any) => {
     if (!bank1 || !bank2 || !services) return;
     idList.value = getServicesIds(services)
+    serviceName.value = getServiceNames(services)
+
     let id1 = toRaw(bank1.id)
     let id2 = toRaw(bank2.id)
 

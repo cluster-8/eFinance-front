@@ -10,8 +10,8 @@
                 </thead>
                 
               <tbody>
-                <tr>
-                  <td>{{groupedProps.serviceName}}</td>
+                <tr v-for="service in groupedProps.serviceName">
+                  <td>{{service}}</td>
                 </tr>
                 
               <!--   
