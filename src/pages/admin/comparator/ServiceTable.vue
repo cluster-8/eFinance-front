@@ -37,13 +37,7 @@
 
 </script>
 
-<style lang="scss">
-  .markup-tables {
-    .table-wrapper {
-      overflow: auto;
-    }
-  }
-</style>
+
 
 
 

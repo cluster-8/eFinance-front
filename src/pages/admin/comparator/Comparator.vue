@@ -28,7 +28,7 @@
           multiple
           :max-visible-options="1"
       />
-      <ServiceTable v-bind:serviceName="serviceName" style="width: auto; margin-top: 4rem;"></ServiceTable>
+      <ServiceTable v-bind:serviceName="serviceName" style="min-width: 34rem; max-width: fit-content; margin-top: 4rem;"></ServiceTable>
 
     </div>
 
@@ -43,10 +43,10 @@
           :text-by="(option) => option.nome"
           search-placeholder-text="Buscar"
           searchable
-          style="width: 20rem;"
+          style="width: 18rem;"
 
       />
-      <BankTable v-bind:groupedProps="bank1Props" style="width: auto; margin-top: 4rem;"></BankTable>
+      <BankTable v-bind:groupedProps="bank1Props" style="width: 18rem; margin-top: 4rem;"></BankTable>
 
     </div>
 
@@ -60,9 +60,9 @@
         :text-by="(option) => option.nome"
         search-placeholder-text="Buscar"
         searchable
-        style="width: 20rem;"
+        style="width: 18rem;"
       />
-      <BankTable v-bind:groupedProps="bank2Props" style="width: auto; margin-top: 4rem;"></BankTable>
+      <BankTable v-bind:groupedProps="bank2Props" style="width: 18rem; margin-top: 4rem;"></BankTable>
 
     </div>
     
