@@ -13,12 +13,6 @@
                 <tr v-for="service in groupedProps.serviceName">
                   <td>{{service}}</td>
                 </tr>
-                
-              <!--   
-                <tr v-for="(value, key) in groupedProps.bank1Payload">
-                    <td>{{ key }}: {{ value }}</td>
-                </tr>
-                 -->
               </tbody>
             </table>
           </div>

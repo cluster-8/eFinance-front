@@ -6,12 +6,12 @@
           <table class="va-table va-table--striped va-table--hoverable">
 
             <thead>
-              <th>{{ bankPayload.nome }}</th>
+              <th>{{ groupedProps.bankName }}</th>
             </thead>
 
             <tbody>
-              <tr>
-                <td>{{ bankPayload.valorMaximo }}</td>
+              <tr v-for="value in groupedProps.bankPayload">
+                <td>{{ value.valorMaximo }}</td>
               </tr>
             
 
@@ -26,12 +26,12 @@
 <script>
   import { defineComponent } from 'vue';
 
-
   export default defineComponent({
     props: {
-      bankPayload: {
-        Object,
-      },
+      groupedProps: {
+        bankPayload: Object,
+        bankName: Object
+      }
     },
     data() {
       return {

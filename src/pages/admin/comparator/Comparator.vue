@@ -46,7 +46,7 @@
           style="width: 20rem;"
 
       />
-      <BankTable v-bind:bankPayload="bank1Payload" style="width: auto; margin-top: 4rem;"></BankTable>
+      <BankTable v-bind:groupedProps="bank1Props" style="width: auto; margin-top: 4rem;"></BankTable>
 
     </div>
 
@@ -62,7 +62,7 @@
         searchable
         style="width: 20rem;"
       />
-      <BankTable v-bind:bankPayload="bank2Payload" style="width: auto; margin-top: 4rem;"></BankTable>
+      <BankTable v-bind:groupedProps="bank2Props" style="width: auto; margin-top: 4rem;"></BankTable>
 
     </div>
     
@@ -92,12 +92,13 @@
   const serviceName = ref([])
   const bank1Payload = ref([])
   const bank2Payload = ref([])
+  const bank1Name = ref()
+  const bank2Name = ref()
   const idList = ref()
   
   const getServicesIds = (service) => {
     let ids = ''
     service.forEach(element => {
-      console.log(typeof(element.id))
       ids = ids.concat(", ", element.id)
     });
     return ids.slice(2)
@@ -108,8 +109,15 @@
     service.forEach(element => {
       nameList.push(element.nome)
     })
-
     return nameList
+  }
+
+  const getBankValues = (response, bank) => {
+    let bankValues = []
+    response.forEach(element => {
+      bankValues.push(element.instituicoes[bank])
+    });
+    return bankValues
   }
 
   const fetchInstituicoes = async () => {
@@ -134,9 +142,11 @@
       const response = await ComparatorService.getByIdsAndServiceId(id1, id2, idList.value)
       payload.value = response.data
       console.log(response.data)
-      
-      bank1Payload.value = response.data[0].instituicoes[0], response.data[0].instituicoes[0].nome = toRaw(bank1.nome)
-      bank2Payload.value = response.data[0].instituicoes[1], response.data[0].instituicoes[1].nome = toRaw(bank2.nome)
+      bank1Name.value = response.data[0].instituicoes[0].nome = toRaw(bank1.nome)
+      bank2Name.value = response.data[0].instituicoes[1].nome = toRaw(bank2.nome)
+      bank1Payload.value = getBankValues(response.data, 0)
+      bank2Payload.value = getBankValues(response.data, 1)
+
     } catch (e) {
       error.value = e.response.data.message
     }
@@ -159,8 +169,8 @@
         error,
         payload,
         serviceProps: { payload: payload, bank1Payload: bank1Payload, bank2Payload: bank2Payload, serviceName: serviceName },
-        bank1Payload,
-        bank2Payload
+        bank1Props: {bankPayload: bank1Payload, bankName: bank1Name},
+        bank2Props: {bankPayload: bank2Payload, bankName: bank2Name}
       }
   
     },
@@ -179,15 +189,10 @@
       },
       service: {
         handler: (newValue) => {
-          // console.log(toRaw(service.value[0]))
-          
-          //let ids:String = getServicesIds(newValue)
-          
           fetchComparator(bank1.value, bank2.value, newValue)
         },
         immediate: true
       },
-      
 
     },
     
