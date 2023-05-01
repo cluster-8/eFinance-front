@@ -13,8 +13,6 @@
               <tr v-for="value in groupedProps.bankPayload">
                 <td>{{ value.valorMaximo }}</td>
               </tr>
-            
-
             </tbody>
           </table>
         </div>

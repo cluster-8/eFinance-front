@@ -10,7 +10,7 @@
                 </thead>
                 
               <tbody>
-                <tr v-for="service in groupedProps.serviceName">
+                <tr v-for="service in serviceName">
                   <td>{{service}}</td>
                 </tr>
               </tbody>
@@ -27,12 +27,7 @@
 
   export default defineComponent({
     props: {
-      groupedProps: {
-        payload: Object,
-        bank1Payload: Object,
-        bank2Payload: Object,
-        serviceName: Object
-      }
+      serviceName: Object
     },
     data() {
       return {

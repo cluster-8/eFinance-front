@@ -28,7 +28,7 @@
           multiple
           :max-visible-options="1"
       />
-      <ServiceTable v-bind:groupedProps="serviceProps" style="width: auto; margin-top: 4rem;"></ServiceTable>
+      <ServiceTable v-bind:serviceName="serviceName" style="width: auto; margin-top: 4rem;"></ServiceTable>
 
     </div>
 
@@ -168,7 +168,7 @@
         service,
         error,
         payload,
-        serviceProps: { payload: payload, bank1Payload: bank1Payload, bank2Payload: bank2Payload, serviceName: serviceName },
+        serviceName,
         bank1Props: {bankPayload: bank1Payload, bankName: bank1Name},
         bank2Props: {bankPayload: bank2Payload, bankName: bank2Name}
       }
