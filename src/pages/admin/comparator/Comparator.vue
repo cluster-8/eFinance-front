@@ -3,7 +3,7 @@
   <p>
     Selecione os serviços desejados, em seguida selecione as instituições para fazer a comparação de valores
   </p>
-
+  
   <div class="mr-3">
     <va-select
       v-model="tipoServico"
@@ -28,7 +28,7 @@
           multiple
           :max-visible-options="1"
       />
-      <ServiceTable v-bind:serviceName="serviceName" style="min-width: 34rem; max-width: fit-content; margin-top: 4rem;"></ServiceTable>
+      <ServiceTable v-if="isVisible" v-bind:serviceName="serviceName" style="min-width: 34rem; max-width: fit-content; margin-top: 4rem;"></ServiceTable>
 
     </div>
 
@@ -46,8 +46,8 @@
           style="width: 18rem;"
 
       />
-      <BankTable v-bind:groupedProps="bank1Props" style="width: 18rem; margin-top: 4rem;"></BankTable>
-
+      <BankTable v-if="isVisible" v-bind:groupedProps="bank1Props" style="width: 18rem; margin-top: 4rem;"></BankTable>
+      
     </div>
 
     <div class="">
@@ -62,13 +62,15 @@
         searchable
         style="width: 18rem;"
       />
-      <BankTable v-bind:groupedProps="bank2Props" style="width: 18rem; margin-top: 4rem;"></BankTable>
+      <BankTable v-if="isVisible" v-bind:groupedProps="bank2Props" style="width: 18rem; margin-top: 4rem;"></BankTable>
 
     </div>
     
   </div>
 
-
+  <div>
+    <va-alert v-if="error" icon="info" class="mb-3 mt-3" :description="error" />
+  </div>
 </template>
 
 
@@ -95,6 +97,7 @@
   const bank1Name = ref()
   const bank2Name = ref()
   const idList = ref()
+  const isVisible = ref(false)
   
   const getServicesIds = (service) => {
     let ids = ''
@@ -146,7 +149,8 @@
       bank2Name.value = response.data[0].instituicoes[1].nome = toRaw(bank2.nome)
       bank1Payload.value = getBankValues(response.data, 0)
       bank2Payload.value = getBankValues(response.data, 1)
-
+      isVisible.value = true
+      error.value = false
     } catch (e) {
       error.value = e.response.data.message
     }
@@ -167,6 +171,7 @@
         servicos,
         service,
         error,
+        isVisible,
         payload,
         serviceName,
         bank1Props: {bankPayload: bank1Payload, bankName: bank1Name},
