@@ -86,13 +86,25 @@
   const servicos = ref([])
   const bank1 = ref()
   const bank2 = ref()
-  const service = ref()
+  const service = ref([])
   const error = ref(false)
   const payload = ref([])
   const serviceName = ref()
   const bank1Payload = ref([])
   const bank2Payload = ref([])
+  const idList = ref()
   
+  const getServicesIds = (service) => {
+    let ids = ''
+    service.forEach(element => {
+      console.log(typeof(element.id))
+      ids = ids.concat(", ", element.id)
+      
+    });
+    return ids.slice(2)
+
+  }
+
   const fetchInstituicoes = async () => {
     let response = await api.get("instituicoes");
     instituicoes.value = response.data;
@@ -103,15 +115,14 @@
     servicos.value = response.data
   }
 
-  const fetchComparator = async (bank1:any, bank2: any, service: any) => {
-    if (!bank1 || !bank2 || !service) return;
+  const fetchComparator = async (bank1:any, bank2: any, services: any) => {
+    if (!bank1 || !bank2 || !services) return;
+    idList.value = getServicesIds(services)
     let id1 = toRaw(bank1.id)
     let id2 = toRaw(bank2.id)
-    let serviceId = toRaw(service.id)
-    serviceName.value = toRaw(service.nome)
 
     try {
-      const response = await ComparatorService.getByIdsAndServiceId(id1, id2, serviceId)
+      const response = await ComparatorService.getByIdsAndServiceId(id1, id2, idList.value)
       payload.value = response.data
       console.log(response.data)
       
@@ -159,6 +170,10 @@
       },
       service: {
         handler: (newValue) => {
+          // console.log(toRaw(service.value[0]))
+          
+          //let ids:String = getServicesIds(newValue)
+          
           fetchComparator(bank1.value, bank2.value, newValue)
         },
         immediate: true
