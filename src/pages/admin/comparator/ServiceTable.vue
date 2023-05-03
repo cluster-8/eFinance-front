@@ -11,7 +11,7 @@
                 
               <tbody>
                 <tr v-for="service in serviceName">
-                  <td>{{service}}</td>
+                  <td class="quebra_linha">{{service}}</td>
                 </tr>
               </tbody>
             </table>
@@ -36,6 +36,14 @@
   })
 
 </script>
+
+<style lang="scss">
+
+.quebra_linha {
+  white-space: nowrap
+}
+
+</style>
 
 
 

@@ -7,7 +7,7 @@
   <div class="mr-3">
     <va-select
       v-model="tipoServico"
-      class="mt-3"
+      class="mt-3 quebra_linha"
       label="Tipo de Serviço"
       :options="tipos"
       style="width: 200px;"
@@ -18,7 +18,7 @@
       <va-select
           placeholder="Selecione o serviço desejado"
           v-model="service"
-          class="mt-3"
+          class="mt-3 quebra_linha"
           label="Serviço"
           :options="servicos"
           :text-by="(option) => option.nome"
@@ -37,7 +37,7 @@
       <va-select
           placeholder="Selecione a Instituição"
           v-model="bank1"
-          class="mt-3"
+          class="mt-3 quebra_linha"
           label="Instituição Financeira 1"
           :options="instituicoes"
           :text-by="(option) => option.nome"
@@ -210,3 +210,11 @@
 }
 
 </script>
+
+<style lang="scss">
+
+.quebra_linha {
+  white-space: nowrap
+}
+
+</style>
