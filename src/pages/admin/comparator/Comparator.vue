@@ -93,6 +93,8 @@
    const serviceName = ref([])
    const bank1Payload = ref([])
    const bank2Payload = ref([])
+   const bank1PayloadTest = ref([])
+   const bank2PayloadTest = ref([])
    const bank1Name = ref()
    const bank2Name = ref()
    const idList = ref()
@@ -137,6 +139,12 @@
        const response = await ComparatorService.getByIdsAndServiceId(id1, id2, idList.value)
        payload.value = response.data
        console.log(response.data)
+       
+       bank1PayloadTest.value = response.data.map((servico) => {
+        servico.map((instituicao)=> {
+          instituicao.valorMaximo
+        })
+       })
        bank1Name.value = response.data[0].instituicoes[0].nome = toRaw(bank1.nome)
        bank2Name.value = response.data[0].instituicoes[1].nome = toRaw(bank2.nome)
        bank1Payload.value = getBankValues(response.data, 0)
@@ -154,19 +162,21 @@
      },
      data() {
        return {
-         tipoServico,
-         tipos,
-         bank1,
-         bank2,
-         instituicoes,
-         servicos,
-         service,
-         error,
-         isVisible,
-         payload,
-         serviceName,
-         bank1Props: {bankPayload: bank1Payload, bankName: bank1Name},
-         bank2Props: {bankPayload: bank2Payload, bankName: bank2Name}
+          tipoServico,
+          tipos,
+          bank1,
+          bank2,
+          instituicoes,
+          servicos,
+          service,
+          error,
+          isVisible,
+          payload,
+          serviceName,
+          bank1PayloadTest,
+          bank2PayloadTest,
+          bank1Props: {bankPayload: bank1Payload, bankName: bank1Name},
+          bank2Props: {bankPayload: bank2Payload, bankName: bank2Name}
        }
    
      },
