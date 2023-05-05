@@ -42,7 +42,7 @@
         color="#154EC1"
       />
     </div>
-    <div v-if="isVisible && !isLoading" style="margin-top: 2rem">
+    <div v-if="isVisible && !isLoading" style="margin-top: 2rem;">
       <DataTable v-bind:tarifas="tarifas"></DataTable>
     </div>
     <div
@@ -176,3 +176,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+
+@media (max-width: 1500px){
+
+  .va-data-table__table-td{
+    font-size: 90%;
+  }
+}
+</style>
