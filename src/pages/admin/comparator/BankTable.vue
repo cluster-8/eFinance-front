@@ -10,8 +10,8 @@
             </thead>
 
             <tbody>
-              <tr v-for="value in groupedProps.bankPayload">
-                <td>{{ value.valorMaximo }}</td>
+              <tr v-for="(value, idx) in groupedProps.bankPayload" :key="idx">
+                <td >{{ parseData(value.valorMaximo) }}</td>
               </tr>
             </tbody>
           </table>
@@ -24,6 +24,10 @@
 <script>
   import { defineComponent } from 'vue';
 
+  function parseData (value) {
+    return `R$ ${value}`
+  }
+
   export default defineComponent({
     props: {
       groupedProps: {
@@ -33,6 +37,7 @@
     },
     data() {
       return {
+        parseData,
       }
     }
   })

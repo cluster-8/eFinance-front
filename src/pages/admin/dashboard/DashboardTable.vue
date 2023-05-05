@@ -2,8 +2,8 @@
   <div class="markup-tables flex">
     <va-card>
       <va-card-content>
-        <div class="table-wrapper">
-          <table class="va-table va-table--striped va-table--hoverable">
+        <div class="table-wrapper va-table">
+          <table class="va-table--striped va-table--hoverable">
             <thead>
               <tr>
                 <th>Serviço</th>

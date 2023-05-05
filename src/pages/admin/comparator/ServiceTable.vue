@@ -1,5 +1,5 @@
 <template>
-    <div class="markup-tables flex" style="max-width: fit-content;">
+    <div class="markup-tables flex">
       <va-card>
         <va-card-content>
           <div class="table-wrapper">
@@ -42,6 +42,7 @@
 .quebra_linha {
   white-space: nowrap
 }
+
 
 </style>
 
