@@ -11,7 +11,8 @@
 
             <tbody>
               <tr v-for="(value, idx) in groupedProps.bankPayload" :key="idx">
-                <td >{{ parseData(value.valorMaximo) }}</td>
+                <!-- <td >{{ parseData(value.valorMaximo) }}</td> -->
+                <td>{{ value.valorMaximo}}</td>
               </tr>
             </tbody>
           </table>

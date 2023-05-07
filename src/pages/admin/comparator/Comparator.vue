@@ -29,7 +29,7 @@
            multiple
            :max-visible-options="1"
        />
-       <ServiceTable v-if="isVisible" v-bind:serviceName="serviceName" class="width_service font_size" style=" margin-top: 4rem;"></ServiceTable>
+       <ServiceTable v-if="isVisible" v-bind:services="payload" class="width_service font_size" style=" margin-top: 4rem;"></ServiceTable>
  
      </div>
  
@@ -91,6 +91,7 @@
    const error = ref(false)
    const payload = ref([])
    const serviceName = ref([])
+   const servicePayload = ref([])
    const bank1Payload = ref([])
    const bank2Payload = ref([])
    const bank1PayloadTest = ref([])
@@ -132,19 +133,32 @@
    const fetchComparator = async (bank1:any, bank2: any, services: any) => {
      if (!bank1 || !bank2 || !services) return;
      idList.value = getServicesIds(services)
-     serviceName.value = getServiceNames(services)
      let id1 = toRaw(bank1.id)
      let id2 = toRaw(bank2.id)
      try {
-       const response = await ComparatorService.getByIdsAndServiceId(id1, id2, idList.value)
-       payload.value = response.data
-       console.log(response.data)
-       
-       bank1PayloadTest.value = response.data.map((servico) => {
-        servico.map((instituicao)=> {
-          instituicao.valorMaximo
-        })
+        const response = await ComparatorService.getByIdsAndServiceId(id1, id2, idList.value)
+        payload.value = response.data
+        //console.log(response.data)
+        
+        let payload1 = []
+        let payload2 = []
+   
+        response.data.map((servico) => {
+          servico.instituicoes.map((banco) => {
+
+            if(banco.instituicaoId == id1){
+              payload1.push(banco)
+            }
+            else if(banco.instituicaoId == id2){
+              payload2.push(banco)
+            }
+      
+          })
        })
+       console.log(JSON.stringify(payload1))
+       console.log(JSON.stringify(payload2))
+       bank1PayloadTest.value = payload1
+       bank2PayloadTest.value = payload2
        bank1Name.value = response.data[0].instituicoes[0].nome = toRaw(bank1.nome)
        bank2Name.value = response.data[0].instituicoes[1].nome = toRaw(bank2.nome)
        bank1Payload.value = getBankValues(response.data, 0)
@@ -152,7 +166,7 @@
        isVisible.value = true
        error.value = false
      } catch (e) {
-       error.value = e.response.data.message
+      //console.log(e)
      }
    }
    export default {
@@ -175,8 +189,8 @@
           serviceName,
           bank1PayloadTest,
           bank2PayloadTest,
-          bank1Props: {bankPayload: bank1Payload, bankName: bank1Name},
-          bank2Props: {bankPayload: bank2Payload, bankName: bank2Name}
+          bank1Props: {bankPayload: bank1PayloadTest, bankName: bank1Name},
+          bank2Props: {bankPayload: bank2PayloadTest, bankName: bank2Name}
        }
    
      },

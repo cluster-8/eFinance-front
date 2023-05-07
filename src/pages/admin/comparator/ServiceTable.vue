@@ -10,8 +10,8 @@
                 </thead>
                 
               <tbody>
-                <tr v-for="service in serviceName">
-                  <td class="quebra_linha">{{service}}</td>
+                <tr v-for="service in services">
+                  <td class="quebra_linha">{{service.servicoId}}</td>
                 </tr>
               </tbody>
             </table>
@@ -27,7 +27,7 @@
 
   export default defineComponent({
     props: {
-      serviceName: Object
+      services: Object
     },
     data() {
       return {
