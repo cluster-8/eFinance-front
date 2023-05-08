@@ -135,38 +135,65 @@
      idList.value = getServicesIds(services)
      let id1 = toRaw(bank1.id)
      let id2 = toRaw(bank2.id)
+     let payload1 = []
+     let payload2 = []
      try {
         const response = await ComparatorService.getByIdsAndServiceId(id1, id2, idList.value)
-        payload.value = response.data
-        //console.log(response.data)
+        console.log(response)
+        if (!response.data) {
+          payload1.push({
+            id: id1,
+            valorMaximo: "Nao ha valor" 
+          })
+          payload2.push({
+            id: id2,
+            valorMaximo: "Nao ha valor" 
+          })
+          return
+        }
         
-        let payload1 = []
-        let payload2 = []
+        payload.value = response.data
+        console.log(response.data)
+        
+
    
         response.data.map((servico) => {
-          servico.instituicoes.map((banco) => {
+          let instA = servico.instituicoes.find((banco) => banco.instituicaoId == id1)
+          let instB = servico.instituicoes.find((banco) => banco.instituicaoId == id2)
 
-            if(banco.instituicaoId == id1){
-              payload1.push(banco)
-            }
-            else if(banco.instituicaoId == id2){
-              payload2.push(banco)
-            }
-      
+          if (!instA) payload1.push({
+            id: id1,
+            valorMaximo: "Nao ha valor" 
           })
+          else payload1.push(instA)
+
+          if (!instB) payload2.push({
+            id: id2,
+            valorMaximo: "Nao ha valor" 
+          })
+          else payload2.push(instB)
+
+          console.log(instA, instB)
+
+          bank1PayloadTest.value = payload1
+          bank2PayloadTest.value = payload2
        })
-       console.log(JSON.stringify(payload1))
-       console.log(JSON.stringify(payload2))
-       bank1PayloadTest.value = payload1
-       bank2PayloadTest.value = payload2
-       bank1Name.value = response.data[0].instituicoes[0].nome = toRaw(bank1.nome)
-       bank2Name.value = response.data[0].instituicoes[1].nome = toRaw(bank2.nome)
-       bank1Payload.value = getBankValues(response.data, 0)
-       bank2Payload.value = getBankValues(response.data, 1)
-       isVisible.value = true
-       error.value = false
+
+      isVisible.value = true
+      error.value = false
      } catch (e) {
-      //console.log(e)
+      //error.value = e.response.data.message
+      payload1.push({
+        id: id1,
+        valorMaximo: "Nao ha valor" 
+      })
+      payload2.push({
+        id: id2,
+        valorMaximo: "Nao ha valor" 
+      })
+      bank1PayloadTest.value = payload1
+      bank2PayloadTest.value = payload2
+      console.log(bank1PayloadTest.value)
      }
    }
    export default {
@@ -210,6 +237,7 @@
        service: {
          handler: (newValue) => {
            fetchComparator(bank1.value, bank2.value, newValue)
+           console.log(newValue)
          },
          immediate: true
        },
