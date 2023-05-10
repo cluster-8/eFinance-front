@@ -1,7 +1,8 @@
 import axios, {AxiosInstance} from 'axios'
 
 const api: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://api-efinance.herokuapp.com/",
+  // baseURL: "http://localhost:3002",
+  baseURL: import.meta.env.VITE_API_URL 
 })
 
 export default api
