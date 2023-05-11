@@ -11,7 +11,7 @@
                 
               <tbody>
                 <tr v-for="service in services">
-                  <td class="quebra_linha">{{service.servicoId}}</td>
+                  <td class="quebra_linha">{{service}}</td>
                 </tr>
               </tbody>
             </table>
