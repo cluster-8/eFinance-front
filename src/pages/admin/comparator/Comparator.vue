@@ -21,7 +21,7 @@
            placeholder="Selecione o serviço desejado"
            v-model="service"
            class="mt-3 quebra_linha width_service font_size"
-           label="Serviço"
+           label="Serviços"
            :options="servicos"
            :text-by="(option) => option.nome"
            search-placeholder-text="Buscar"
@@ -186,11 +186,11 @@
       //error.value = e.response.data.message
       payload1.push({
         id: id1,
-        valorMaximo: "Nao ha valor" 
+        valorMaximo: "Serviço não oferecido" 
       })
       payload2.push({
         id: id2,
-        valorMaximo: "Nao ha valor" 
+        valorMaximo: "Serviço não oferecido" 
       })
       bank1PayloadTest.value = payload1
       bank2PayloadTest.value = payload2
