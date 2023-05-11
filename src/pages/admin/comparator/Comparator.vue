@@ -144,11 +144,11 @@
         if (!response.data) {
           payload1.push({
             id: id1,
-            valorMaximo: "null" 
+            valorMaximo: "Serviço não oferecido" 
           })
           payload2.push({
             id: id2,
-            valorMaximo: "null" 
+            valorMaximo: "Serviço não oferecido" 
           })
           return
         }
@@ -164,13 +164,13 @@
 
           if (!instA) payload1.push({
             id: id1,
-            valorMaximo: "Nao ha valor" 
+            valorMaximo: "Serviço não oferecido" 
           })
           else payload1.push(instA)
 
           if (!instB) payload2.push({
             id: id2,
-            valorMaximo: "Nao ha valor" 
+            valorMaximo: "Serviço não oferecido" 
           })
           else payload2.push(instB)
 
