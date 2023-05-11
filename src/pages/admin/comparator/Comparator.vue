@@ -29,7 +29,7 @@
            multiple
            :max-visible-options="1"
        />
-       <ServiceTable v-if="isVisible" v-bind:services="payload" class="width_service font_size" style=" margin-top: 4rem;"></ServiceTable>
+       <ServiceTable v-if="isVisible" v-bind:services="serviceName" class="width_service font_size" style=" margin-top: 4rem;"></ServiceTable>
  
      </div>
  
@@ -133,6 +133,7 @@
    const fetchComparator = async (bank1:any, bank2: any, services: any) => {
      if (!bank1 || !bank2 || !services) return;
      idList.value = getServicesIds(services)
+     serviceName.value = getServiceNames(services)
      let id1 = toRaw(bank1.id)
      let id2 = toRaw(bank2.id)
      let payload1 = []
@@ -143,11 +144,11 @@
         if (!response.data) {
           payload1.push({
             id: id1,
-            valorMaximo: "Nao ha valor" 
+            valorMaximo: "null" 
           })
           payload2.push({
             id: id2,
-            valorMaximo: "Nao ha valor" 
+            valorMaximo: "null" 
           })
           return
         }
