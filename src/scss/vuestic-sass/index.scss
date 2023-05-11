@@ -12,3 +12,12 @@
 .va-dropdown__content {
   z-index: +1;
 }
+
+.va-navbar {
+  display: flex;
+  max-height: 3.5rem;
+}
+
+.va-sidebar__menu {
+  padding: 0;
+}
