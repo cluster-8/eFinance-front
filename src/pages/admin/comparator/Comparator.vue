@@ -180,18 +180,7 @@
       isVisible.value = true
       error.value = false
      } catch (e) {
-      //error.value = e.response.data.message
-      payload1.push({
-        id: id1,
-        valorMaximo: "Serviço não oferecido" 
-      })
-      payload2.push({
-        id: id2,
-        valorMaximo: "Serviço não oferecido" 
-      })
-      bank1PayloadTest.value = payload1
-      bank2PayloadTest.value = payload2
-      console.log(bank1PayloadTest.value)
+      error.value = e.response.data.message
      }
    }
    export default {
