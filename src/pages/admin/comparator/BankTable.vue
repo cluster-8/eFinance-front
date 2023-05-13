@@ -30,11 +30,6 @@
         bankPayload: Object,
         bankName: Object
       }
-    },
-    data() {
-      return {
-        parseData,
-      }
     }
   })
 
