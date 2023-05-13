@@ -115,13 +115,7 @@
      })
      return nameList
    }
-   const getBankValues = (response, bank) => {
-     let bankValues = []
-     response.forEach(element => {
-       bankValues.push(element.instituicoes[bank])
-     });
-     return bankValues
-   }
+
    const fetchInstituicoes = async () => {
      let response = await api.get("instituicoes");
      instituicoes.value = response.data;
@@ -134,12 +128,15 @@
      if (!bank1 || !bank2 || !services) return;
      idList.value = getServicesIds(services)
      serviceName.value = getServiceNames(services)
+     bank1Name.value = bank1.nome
+     bank2Name.value = bank2.nome
      let id1 = toRaw(bank1.id)
      let id2 = toRaw(bank2.id)
      let payload1 = []
      let payload2 = []
      try {
         const response = await ComparatorService.getByIdsAndServiceId(id1, id2, idList.value)
+        
         console.log(response)
         if (!response.data) {
           payload1.push({
