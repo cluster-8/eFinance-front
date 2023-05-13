@@ -91,11 +91,8 @@
    const error = ref(false)
    const payload = ref([])
    const serviceName = ref([])
-   const servicePayload = ref([])
    const bank1Payload = ref([])
    const bank2Payload = ref([])
-   const bank1PayloadTest = ref([])
-   const bank2PayloadTest = ref([])
    const bank1Name = ref()
    const bank2Name = ref()
    const idList = ref()
@@ -137,7 +134,6 @@
      try {
         const response = await ComparatorService.getByIdsAndServiceId(id1, id2, idList.value)
         
-        console.log(response)
         if (!response.data) {
           payload1.push({
             id: id1,
@@ -150,9 +146,7 @@
           return
         }
         
-        payload.value = response.data
-        console.log(response.data)
-        
+        payload.value = response.data        
 
    
         response.data.map((servico) => {
@@ -171,10 +165,8 @@
           })
           else payload2.push(instB)
 
-          console.log(instA, instB)
-
-          bank1PayloadTest.value = payload1
-          bank2PayloadTest.value = payload2
+          bank1Payload.value = payload1
+          bank2Payload.value = payload2
        })
 
       isVisible.value = true
@@ -201,10 +193,10 @@
           isVisible,
           payload,
           serviceName,
-          bank1PayloadTest,
-          bank2PayloadTest,
-          bank1Props: {bankPayload: bank1PayloadTest, bankName: bank1Name},
-          bank2Props: {bankPayload: bank2PayloadTest, bankName: bank2Name}
+          bank1Payload,
+          bank2Payload,
+          bank1Props: {bankPayload: bank1Payload, bankName: bank1Name},
+          bank2Props: {bankPayload: bank2Payload, bankName: bank2Name}
        }
    
      },
@@ -224,7 +216,6 @@
        service: {
          handler: (newValue) => {
            fetchComparator(bank1.value, bank2.value, newValue)
-           console.log(newValue)
          },
          immediate: true
        },
