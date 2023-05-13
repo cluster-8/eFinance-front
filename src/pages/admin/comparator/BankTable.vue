@@ -24,10 +24,6 @@
 <script>
   import { defineComponent } from 'vue';
 
-  function parseData (value) {
-    return `R$ ${value}`
-  }
-
   export default defineComponent({
     props: {
       groupedProps: {
