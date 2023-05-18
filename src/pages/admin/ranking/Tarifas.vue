@@ -61,6 +61,7 @@ import { ref, onMounted } from "vue";
 import Table from "../ranking/TarifasTable.vue";
 import ScoresService from "../../../services/ScoresService";
 import { ServiceType, RankType, RankedFinancialInstituition } from "../../../types";
+import Top5Service from "../../../services/Top5Service"
 
 const tipoServico = ref<ServiceType>(ServiceType.All);
 const tipos: ServiceType[] = [
@@ -91,14 +92,17 @@ const fetchRank = async (
   }
 
   try {
-    const { data,headers } = await ScoresService.getAll(
+    const { data } = await ScoresService.getAll(
       order,
       pessoa,
       currentPage.value
     );
-    ranking.value = data;
+    const { headers } = await Top5Service.getHead();
+    console.log(headers);
+    console.log(headers.total);
     totalPages.value = (parseInt(headers.total));
-    totalPages.value =(Math.ceil(totalPages.value/20));
+    totalPages.value =(Math.ceil(totalPages.value/20)+2);
+    ranking.value = data;
     isError.value = false;
   } catch (error) {
     isError.value = error.response.data.message;
