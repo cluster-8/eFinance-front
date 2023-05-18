@@ -72,12 +72,13 @@ const ranking = ref<RankedFinancialInstituition[]>();
 const rankType = ref<RankType>(RankType.LowerTariffs);
 const isError = ref<boolean>(false);
 const currentPage = ref<number>(1);
-const totalPages = ref<number>(1)
+const totalPages = ref<number>(0);
 
 const fetchRank = async (
   serviceType: ServiceType,
   sortType: RankType
 ): Promise<void> => {
+  
   let pessoa: string;
   let order = sortType == "Maiores tarifas" ? "desc" : "asc";
 
@@ -90,26 +91,19 @@ const fetchRank = async (
   }
 
   try {
-    const { data } = await ScoresService.getAll(
+    const { data,headers } = await ScoresService.getAll(
       order,
       pessoa,
       currentPage.value
     );
     ranking.value = data;
-    setTotalPages();
+    totalPages.value = (parseInt(headers.total));
+    totalPages.value =(Math.ceil(totalPages.value/20));
     isError.value = false;
   } catch (error) {
     isError.value = error.response.data.message;
   }
 };
-
-const setTotalPages = () => {
-  if (!ranking.value) return
-  if (ranking.value.length < 20) {
-    return totalPages.value = currentPage.value
-  }
-  return totalPages.value = currentPage.value + 2
-}
 
 export default {
   components: {
