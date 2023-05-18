@@ -21,7 +21,7 @@
            placeholder="Selecione o serviço desejado"
            v-model="service"
            class="mt-3 quebra_linha width_service font_size"
-           label="Serviço"
+           label="Serviços"
            :options="servicos"
            :text-by="(option) => option.nome"
            search-placeholder-text="Buscar"
@@ -29,7 +29,7 @@
            multiple
            :max-visible-options="1"
        />
-       <ServiceTable v-if="isVisible" v-bind:serviceName="serviceName" class="width_service font_size" style=" margin-top: 4rem;"></ServiceTable>
+       <ServiceTable v-if="isVisible" v-bind:services="serviceName" class="width_service font_size" style=" margin-top: 4rem;"></ServiceTable>
  
      </div>
  
@@ -112,13 +112,7 @@
      })
      return nameList
    }
-   const getBankValues = (response, bank) => {
-     let bankValues = []
-     response.forEach(element => {
-       bankValues.push(element.instituicoes[bank])
-     });
-     return bankValues
-   }
+
    const fetchInstituicoes = async () => {
      let response = await api.get("instituicoes");
      instituicoes.value = response.data;
@@ -131,20 +125,54 @@
      if (!bank1 || !bank2 || !services) return;
      idList.value = getServicesIds(services)
      serviceName.value = getServiceNames(services)
+     bank1Name.value = bank1.nome
+     bank2Name.value = bank2.nome
      let id1 = toRaw(bank1.id)
      let id2 = toRaw(bank2.id)
+     let payload1 = []
+     let payload2 = []
      try {
-       const response = await ComparatorService.getByIdsAndServiceId(id1, id2, idList.value)
-       payload.value = response.data
-       console.log(response.data)
-       bank1Name.value = response.data[0].instituicoes[0].nome = toRaw(bank1.nome)
-       bank2Name.value = response.data[0].instituicoes[1].nome = toRaw(bank2.nome)
-       bank1Payload.value = getBankValues(response.data, 0)
-       bank2Payload.value = getBankValues(response.data, 1)
-       isVisible.value = true
-       error.value = false
+        const response = await ComparatorService.getByIdsAndServiceId(id1, id2, idList.value)
+        
+        if (!response.data) {
+          payload1.push({
+            id: id1,
+            valorMaximo: null 
+          })
+          payload2.push({
+            id: id2,
+            valorMaximo: null 
+          })
+          return
+        }
+        
+        payload.value = response.data        
+
+   
+        response.data.map((servico) => {
+          let instA = servico.instituicoes.find((banco) => banco.instituicaoId == id1)
+          let instB = servico.instituicoes.find((banco) => banco.instituicaoId == id2)
+
+          if (!instA) payload1.push({
+            id: id1,
+            valorMaximo: null 
+          })
+          else payload1.push(instA)
+
+          if (!instB) payload2.push({
+            id: id2,
+            valorMaximo: null 
+          })
+          else payload2.push(instB)
+
+          bank1Payload.value = payload1
+          bank2Payload.value = payload2
+       })
+
+      isVisible.value = true
+      error.value = false
      } catch (e) {
-       error.value = e.response.data.message
+      error.value = e.response.data.message
      }
    }
    export default {
@@ -154,19 +182,21 @@
      },
      data() {
        return {
-         tipoServico,
-         tipos,
-         bank1,
-         bank2,
-         instituicoes,
-         servicos,
-         service,
-         error,
-         isVisible,
-         payload,
-         serviceName,
-         bank1Props: {bankPayload: bank1Payload, bankName: bank1Name},
-         bank2Props: {bankPayload: bank2Payload, bankName: bank2Name}
+          tipoServico,
+          tipos,
+          bank1,
+          bank2,
+          instituicoes,
+          servicos,
+          service,
+          error,
+          isVisible,
+          payload,
+          serviceName,
+          bank1Payload,
+          bank2Payload,
+          bank1Props: {bankPayload: bank1Payload, bankName: bank1Name},
+          bank2Props: {bankPayload: bank2Payload, bankName: bank2Name}
        }
    
      },
