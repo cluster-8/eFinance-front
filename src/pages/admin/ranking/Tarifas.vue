@@ -92,16 +92,15 @@ const fetchRank = async (
   }
 
   try {
-    const { data } = await ScoresService.getAll(
+    const { data, headers } = await ScoresService.getAll(
       order,
       pessoa,
       currentPage.value
     );
-    const { headers } = await Top5Service.getHead();
-    console.log(headers);
-    console.log(headers.total);
+
     totalPages.value = (parseInt(headers.total));
-    totalPages.value =(Math.ceil(totalPages.value/20)+2);
+    totalPages.value =(Math.ceil(totalPages.value/20));
+
     ranking.value = data;
     isError.value = false;
   } catch (error) {
