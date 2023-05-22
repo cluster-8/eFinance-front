@@ -45,7 +45,7 @@
   </div>
   <div class="pagination-container">
     <va-pagination
-      v-model="currentPage"
+      v-model="page"
       :pages="totalPages"
       :visible-pages="3"
       buttons-preset="secondary"
@@ -60,7 +60,11 @@
 import { ref, onMounted } from "vue";
 import Table from "../ranking/TarifasTable.vue";
 import ScoresService from "../../../services/ScoresService";
-import { ServiceType, RankType, RankedFinancialInstituition } from "../../../types";
+import {
+  ServiceType,
+  RankType,
+  RankedFinancialInstituition,
+} from "../../../types";
 
 const tipoServico = ref<ServiceType>(ServiceType.All);
 const tipos: ServiceType[] = [
@@ -71,8 +75,10 @@ const tipos: ServiceType[] = [
 const ranking = ref<RankedFinancialInstituition[]>();
 const rankType = ref<RankType>(RankType.LowerTariffs);
 const isError = ref<boolean>(false);
-const currentPage = ref<number>(1);
-const totalPages = ref<number>(1)
+const currentPage = ref<number>(0);
+const totalPages = ref<number>(1);
+
+const page = ref<number>(1)
 
 const fetchRank = async (
   serviceType: ServiceType,
@@ -90,26 +96,25 @@ const fetchRank = async (
   }
 
   try {
-    const { data } = await ScoresService.getAll(
+    const { data, headers } = await ScoresService.getAll(
       order,
       pessoa,
       currentPage.value
     );
+
+    const totalElements = headers.total
+    
     ranking.value = data;
-    setTotalPages();
+    setTotalPages(totalElements);
     isError.value = false;
   } catch (error) {
     isError.value = error.response.data.message;
   }
 };
 
-const setTotalPages = () => {
-  if (!ranking.value) return
-  if (ranking.value.length < 20) {
-    return totalPages.value = currentPage.value
-  }
-  return totalPages.value = currentPage.value + 2
-}
+const setTotalPages = (totalElements) => {
+  return (totalPages.value = Math.ceil(totalElements/20))
+};
 
 export default {
   components: {
@@ -117,7 +122,11 @@ export default {
   },
   data() {
     return {
-      groupedProps: { ranking: ranking, type: tipoServico, currentPage: currentPage },
+      groupedProps: {
+        ranking: ranking,
+        type: tipoServico,
+        currentPage: currentPage,
+      },
       services: ["Menores tarifas", "Maiores tarifas"],
       tipoServico,
       currentPage,
@@ -126,6 +135,7 @@ export default {
       isError,
       ranking,
       tipos,
+      page
     };
   },
   watch: {
@@ -143,6 +153,11 @@ export default {
       handler: (newValue: number) =>
         fetchRank(tipoServico.value, rankType.value),
       immediate: true,
+    },
+    page: {
+      handler: (newValue: number) => {
+        currentPage.value = newValue - 1
+      }
     },
   },
   setup() {
