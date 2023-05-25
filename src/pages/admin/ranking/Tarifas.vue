@@ -84,6 +84,7 @@ const fetchRank = async (
   serviceType: ServiceType,
   sortType: RankType
 ): Promise<void> => {
+  
   let pessoa: string;
   let order = sortType == "Maiores tarifas" ? "desc" : "asc";
 
@@ -101,9 +102,7 @@ const fetchRank = async (
       pessoa,
       currentPage.value
     );
-
-    const totalElements = headers.total
-    
+    const totalElements = (parseInt(headers.total))
     ranking.value = data;
     setTotalPages(totalElements);
     isError.value = false;

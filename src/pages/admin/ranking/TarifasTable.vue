@@ -18,7 +18,7 @@
           :key="institution.id"
         >
           <td class="align-icon">
-            <div class="ranking-icon">#{{ (index+1) + ((groupedProps.currentPage-1) * 20) }}</div></td>
+            <div class="ranking-icon">#{{ (index+1) + ((groupedProps.currentPage) * 20) }}</div></td>
           <td class="institution-name align-table">{{ institution.instituicao.nome }}</td>
           <td v-if="groupedProps.type === 'Pessoa Física'" class="maximum-value align-table">{{ institution.scorePf }}</td>
           <td v-else-if="groupedProps.type === 'Pessoa Jurídica'" class="maximum-value align-table">{{ institution.scorePj }}</td>
