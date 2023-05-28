@@ -34,6 +34,7 @@
 
     <div class="mr-3">
       <va-select
+      placeholder="Selecione a instituição desejada"
         v-model="banco"
         class="mt-3"
         label="Busque a Instituição"
