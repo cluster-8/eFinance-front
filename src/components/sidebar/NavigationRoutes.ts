@@ -7,41 +7,40 @@ export interface INavigationRoute {
 
 export default {
   root: {
-    name: '/',
-    displayName: 'navigationRoutes.home',
+    name: "/",
+    displayName: "navigationRoutes.home",
   },
   routes: [
     //? PAINEL PRINCIPAL
     {
-      name: 'dashboard',
-      displayName: 'menu.dashboard',
+      name: "dashboard",
+      displayName: "menu.dashboard",
       meta: {
-        icon: 'vuestic-iconset-dashboard',
+        icon: "vuestic-iconset-dashboard",
       },
     },
     {
-      
-      name: 'ranking',
-      displayName: 'menu.ranking',
+      name: "ranking",
+      displayName: "menu.ranking",
       meta: {
-        icon: 'vuestic-iconset-statistics',
+        icon: "vuestic-iconset-statistics",
       },
       disabled: true,
       children: [
         {
-          name: 'tariffs',
-          displayName: 'menu.tariffs'
+          name: "tariffs",
+          displayName: "menu.tariffs",
         },
         {
-          name: 'timeline',
-          displayName: 'menu.timeline',
+          name: "topfive",
+          displayName: "menu.topfive",
         },
         {
-          name: 'topfive',
-          displayName: 'menu.topfive',
+          name: "linhadotempo",
+          displayName: "menu.linhadotempo",
         },
-      ]
-     /*  children: [
+      ],
+      /*  children: [
         
         {
           name: 'tariffs',
@@ -57,13 +56,12 @@ export default {
         },
       ], */
     },
-    
+
     {
-      
-      name: 'comparator',
-      displayName: 'menu.comparator',
+      name: "comparator",
+      displayName: "menu.comparator",
       meta: {
-        icon: 'vuestic-iconset-tables',
+        icon: "vuestic-iconset-tables",
       },
       /* children: [
        
@@ -82,4 +80,4 @@ export default {
       ], */
     },
   ] as INavigationRoute[],
-}
+};

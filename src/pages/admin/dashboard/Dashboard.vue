@@ -42,7 +42,7 @@
         color="#154EC1"
       />
     </div>
-    <div v-if="isVisible && !isLoading" style="margin-top: 2rem;">
+    <div v-if="isVisible && !isLoading" style="margin-top: 2rem">
       <DataTable v-bind:tarifas="tarifas"></DataTable>
     </div>
     <div
@@ -75,8 +75,8 @@ import { onBeforeMount, ref, toRaw } from "vue";
 import image from "/accountant-pana.png";
 import DataTable from "./DataTable.vue";
 
-import TariffsService from '../../../services/TariffsService'
-import FinancialInstituitionsService from '../../../services/FinancialInstituitionsService'
+import TariffsService from "../../../services/TariffsService";
+import FinancialInstituitionsService from "../../../services/FinancialInstituitionsService";
 
 const tarifas = ref();
 const instituicoes = ref([]);
@@ -91,8 +91,8 @@ const isLoading = ref(false);
 
 const fetchInstituicoes = async () => {
   isLoading.value = true;
-  const { data } = await FinancialInstituitionsService.getAll()
-  instituicoes.value = data
+  const { data } = await FinancialInstituitionsService.getAll();
+  instituicoes.value = data;
   isLoading.value = false;
 };
 
@@ -114,7 +114,7 @@ const parseTariffsData = (tariffs) => {
       "pt-BR"
     );
   });
-  return tariffs
+  return tariffs;
 };
 
 const fetchTarifas = async (banco) => {
@@ -126,9 +126,9 @@ const fetchTarifas = async (banco) => {
     tipoServico.value == "Todos" ? "" : `?tipo=${tipoServico.value.charAt(7)}`;
 
   try {
-    const { data } = await TariffsService.getByIdAndServiceType(id, tipo)
-    const tariffs = parseTariffsData(data)
-    tarifas.value = tariffs
+    const { data } = await TariffsService.getByIdAndServiceType(id, tipo);
+    const tariffs = parseTariffsData(data);
+    tarifas.value = tariffs;
     error.value = false;
     isLoading.value = false;
     isVisible.value = true;
@@ -178,10 +178,8 @@ export default {
 </script>
 
 <style lang="scss">
-
-@media (max-width: 1500px){
-
-  .va-data-table__table-td{
+@media (max-width: 1500px) {
+  .va-data-table__table-td {
     font-size: 90%;
   }
 }
