@@ -6,10 +6,6 @@
 
 <script>
 
-/*
-FONTE: https://www.digitalocean.com/community/tutorials/vuejs-vue-chart-js
-*/
-
 import Chart from "chart.js";
 
 import planetChartData from "./planet-data.js";
@@ -17,7 +13,7 @@ import planetChartData from "./planet-data.js";
 export default {
   name: "LineChart",
   props: {
-    chartData: Object
+    chartData: Object,
   },
   data() {
     return {
@@ -25,15 +21,23 @@ export default {
     };
   },
   mounted() {
-    console.log("Chart Data...",this.chartData)
-    const ctx = document.getElementById("line-chart");
-    new Chart(ctx, this.lineChartData);
+    // const ctx = document.getElementById("line-chart");
+    // new Chart(ctx, this.lineChartData);
+  },
+  watch: {
+    chartData: {
+      handler(newValue) {
+        console.log("NewValue", newValue.data);
+        const ctx = document.getElementById("line-chart");
+        new Chart(ctx, newValue);
+      },
+      // deep: true,
+    },
   },
 };
 </script>
 
 <style scoped>
-
 .container {
   width: 65vw;
   margin: 40px 20px 20px 0px;
