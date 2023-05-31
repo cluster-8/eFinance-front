@@ -7,7 +7,10 @@
       tendência.
     </p>
   </div>
-  <div style="width: 300px; display: flex; margin-top: 20px">
+
+  <div
+    style="width: 300px; display: flex; margin-top: 20px; margin-bottom: 30px"
+  >
     <div class="mr-3">
       <va-select
         v-model="tipo"
@@ -45,20 +48,45 @@
       />
     </div>
   </div>
-  
-    <div id="app" v-if="chartData">
-    <PlanetChart :chart-data="chartData" />
+
+  <div class="my-8">
+    <va-divider />
   </div>
-  <!-- <div v-if="isSelected && !hasChartData">
-    <h2>Sem dados</h2>
+
+  <div>
+    <div v-show="hasChartData">
+      <div id="app" class="chart-container">
+        <PlanetChart :chart-data="chartData" />
+      </div>
+    </div>
+
+    <div v-show="!hasChartData">
+      <div class="content-container" v-if="!isSelected">
+        <va-card stripe stripe-color="">
+          <va-card-title>Selecione</va-card-title>
+          <va-card-content>
+            Selecione o serviço da desejada da instituição financeira para
+            visualizar o histórico e a predição para o próximo valor.
+          </va-card-content>
+        </va-card>
+      </div>
+      <div class="content-container" v-else>
+        <va-card stripe stripe-color="warning">
+          <va-card-title>Sem dados históricos</va-card-title>
+          <va-card-content>
+            Não há dados históricos para o serviço selecionado.
+          </va-card-content>
+        </va-card>
+      </div>
+    </div>
   </div>
-  <div v-if="!hasChartData && !isSelected">
-    <h2>Selecione serviço e instituição</h2>
-  </div> -->
 </template>
 
 <script>
 import PlanetChart from "./charts/LineChart.vue";
+
+import nodataimage from "/no-data-found.png";
+import selectdata from "/select-data.png";
 
 import api from "../../../services/api";
 import { onMounted, ref } from "vue";
@@ -104,6 +132,11 @@ const chartData = ref({
         {
           type: "time",
           distribution: "series",
+          time: {
+            displayFormats: {
+              quarter: "MMM YYYY",
+            },
+          },
         },
       ],
       yAxes: [
@@ -118,7 +151,7 @@ const chartData = ref({
   },
 });
 
-const loading = ref(false)
+const loading = ref(false);
 const hasChartData = ref(false);
 const isSelected = ref(false);
 const servico = ref();
@@ -155,20 +188,20 @@ const fetchChartData = async (servico, banco) => {
     return;
   }
 
-  // loading.value = true;e
   isSelected.value = true;
 
   const { data } = await PredictionService.predict(servico.id, banco.id);
-  // loading.value = false;
-
-  mountChartData(data);
 
   hasChartData.value = data.message ? false : true;
+  mountChartData(data);
 };
 
 const mountChartData = (data) => {
   // caso em que não há dados de tarifas para calcular predição
-  if (data.message) return
+  if (data.message) {
+    hasChartData.value = false;
+    return;
+  }
 
   let aux = { ...chartData.value };
   let labels = data.historic.dates.map((el) => el);
@@ -204,7 +237,10 @@ export default {
       chartData,
       hasChartData,
       isSelected,
-      loading
+      loading,
+      nodataimage,
+      selectdata,
+      chartData,
     };
   },
   watch: {
@@ -217,9 +253,6 @@ export default {
     banco(newValue) {
       fetchChartData(servico.value, newValue);
     },
-    hasChartData(newValue) {
-      console.log(newValue);
-    }
   },
   setup() {
     onMounted(() => {
@@ -229,3 +262,20 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 2rem;
+  width: 50vw;
+}
+
+.panel-container {
+  background-color: #ecf0f1;
+  width: 100%;
+  height: 80px;
+  margin: 20px 0px 50px 0px;
+}
+</style>

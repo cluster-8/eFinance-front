@@ -20,18 +20,12 @@ export default {
       lineChartData: this.chartData || planetChartData,
     };
   },
-  mounted() {
-    // const ctx = document.getElementById("line-chart");
-    // new Chart(ctx, this.lineChartData);
-  },
   watch: {
     chartData: {
       handler(newValue) {
-        console.log("NewValue", newValue.data);
         const ctx = document.getElementById("line-chart");
         new Chart(ctx, newValue);
       },
-      // deep: true,
     },
   },
 };
@@ -39,6 +33,7 @@ export default {
 
 <style scoped>
 .container {
+  height: 40vh;
   width: 65vw;
   margin: 40px 20px 20px 0px;
 }
