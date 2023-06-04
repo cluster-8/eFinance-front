@@ -5,7 +5,7 @@ class PredictionService {
   predict(serviceId: string, instituitionId: string) {
 
     const flaskService: AxiosInstance = axios.create({
-      baseURL: "http://localhost:5000",
+      baseURL: import.meta.env.VITE_FLASK_URL,
     });
 
     return flaskService.post('/predict-tariff', {instituitionId, serviceId} )
