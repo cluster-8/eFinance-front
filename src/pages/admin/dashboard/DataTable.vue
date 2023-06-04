@@ -34,14 +34,14 @@ export default defineComponent({
       {
         key: "valorMaximo",
         name: "Valor Máximo",
-        label: "Valor Máximo",
+        label: "Valor Máximo (R$)",
         sortable: true,
         sortingFn: (a, b) => (a > b ? -1 : 1),
       },
       {
         key: "valorMinimo",
         name: "Valor Mínimo",
-        label: "Valor Mínimo",
+        label: "Valor Mínimo (R$)",
         sortable: true,
         sortingFn: (a, b) => (a > b ? -1 : 1),
       },
