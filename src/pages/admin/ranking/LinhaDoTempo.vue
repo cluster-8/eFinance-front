@@ -53,7 +53,11 @@
     <va-divider />
   </div>
 
-  <div>
+   <div id="app" class="chart-container">
+        <PlanetChart :chart-data="chartData" />
+      </div>
+
+  <!-- <div>
     <div v-show="hasChartData">
       <div id="app" class="chart-container">
         <PlanetChart :chart-data="chartData" />
@@ -79,7 +83,7 @@
         </va-card>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
