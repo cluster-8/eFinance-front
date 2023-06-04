@@ -98,7 +98,20 @@ const fetchInstituicoes = async () => {
 
 const parseTariffsData = (tariffs) => {
   if (!tariffs) return;
+  let addedTariffs = "";
+  let parsedTariffs = [];
+
+  let servicesIdsString = "";
+  let servicesIds = [];
+
+  let filteredTariffs = [];
+
   tariffs.forEach((element) => {
+    if (!servicesIdsString.includes(element.servico.id)) {
+      servicesIdsString = servicesIdsString + element.servico.id
+      servicesIds.push(element.servico.id);
+    }
+
     // handle valorMinimo null values
     if (element.valorMinimo == null) {
       element.valorMinimo = "-";
@@ -113,8 +126,35 @@ const parseTariffsData = (tariffs) => {
     element.dataVigencia = new Date(element.dataVigencia).toLocaleDateString(
       "pt-BR"
     );
+
+    element.periodicidade = element.periodicidade.trim();
+    element.unidade = element.unidade.trim();
+
+    const clone = {
+      ...(delete element.id && delete element.valorMinimo && element),
+    };
+
+    const strClone: string = JSON.stringify(clone);
+
+    if (!addedTariffs.includes(strClone)) {
+      addedTariffs = addedTariffs + strClone;
+      parsedTariffs.push(clone);
+    }
   });
-  return tariffs;
+
+  for (const i in servicesIds) {
+    const result = parsedTariffs.filter(
+      (el) => el.servico.id == servicesIds[i]
+    );
+
+    if (result.length === 1) {
+      filteredTariffs.push(result[0]);
+    } else if (result.length > 1) {
+      filteredTariffs.push(result[result.length - 1]);
+    } else continue;
+  }
+
+  return filteredTariffs;
 };
 
 const fetchTarifas = async (banco) => {
