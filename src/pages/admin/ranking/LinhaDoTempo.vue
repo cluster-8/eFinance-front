@@ -200,7 +200,6 @@ const fetchChartData = async (servico, banco) => {
   isSelected.value = true;
 
   const { data } = await PredictionService.predict(servico.id, banco.id);
-  console.log(data);
 
   hasChartData.value = data.message ? false : true;
   mountChartData(data);
