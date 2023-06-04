@@ -115,16 +115,16 @@ const chartData = ref({
     ],
   },
   options: {
-    plugins: {
-      title: {
-        display: true,
-        text: "Linha do tempo e predição",
-        padding: {
-          top: 10,
-          bottom: 30,
-        },
+    title: {
+      display: true,
+      text: "Variação Histórica de Tarifa e Predição",
+      font: {
+        size: 24,
+        style: "italic",
+        family: "Helvetica Neue",
       },
     },
+    tooltips: {},
     responsive: true,
     lineTension: 1,
     scales: {
@@ -136,14 +136,23 @@ const chartData = ref({
             displayFormats: {
               quarter: "MMM YYYY",
             },
+            // unit: "hour",
+            tooltipFormat: "DD/MM/YYYY - HH:mm",
           },
         },
       ],
       yAxes: [
         {
+          title: {
+            text: "Valor de tarifa",
+          },
           ticks: {
             beginAtZero: true,
             padding: 25,
+            // Include a dollar sign in the ticks
+            callback: function (value, index, ticks) {
+              return "R$" + value;
+            },
           },
         },
       ],
@@ -191,6 +200,7 @@ const fetchChartData = async (servico, banco) => {
   isSelected.value = true;
 
   const { data } = await PredictionService.predict(servico.id, banco.id);
+  console.log(data);
 
   hasChartData.value = data.message ? false : true;
   mountChartData(data);
