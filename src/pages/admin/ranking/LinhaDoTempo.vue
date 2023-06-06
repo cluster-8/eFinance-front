@@ -53,6 +53,10 @@
     <va-divider />
   </div>
 
+   <!-- <div id="app" class="chart-container">
+        <PlanetChart :chart-data="chartData" />
+      </div> -->
+
   <div>
     <div v-show="hasChartData">
       <div id="app" class="chart-container">
@@ -132,13 +136,13 @@ const chartData = ref({
         {
           type: "time",
           distribution: "series",
-          time: {
-            displayFormats: {
-              quarter: "MMM YYYY",
-            },
-            // unit: "hour",
-            tooltipFormat: "DD/MM/YYYY - HH:mm",
-          },
+          // time: {
+          //   displayFormats: {
+          //     quarter: "MMM YYYY",
+          //   },
+          //   // unit: "hour",
+          //   tooltipFormat: "DD/MM/YYYY - HH:mm",
+          // },
         },
       ],
       yAxes: [
@@ -214,6 +218,7 @@ const mountChartData = (data) => {
 
   let aux = { ...chartData.value };
   let labels = data.historic.dates.map((el) => el);
+  labels.forEach((el) => console.log(el))
   labels.push(data.prediction.date);
   aux.data.labels = labels;
   let historic = data.historic.values;

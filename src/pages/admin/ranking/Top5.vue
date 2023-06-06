@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3 class="va-h3">Top 5</h3>
+    <h3 class="va-h3">Top 5 menores tarifas</h3>
     <p>
-      Selecione abaixo o tipo de serviço, o serviço e a data do final do período
+      Selecione abaixo o tipo de serviço, o serviço e a data do final do período para visulizar as 5 instituições com as menores tarifas.
     </p>
   </div>
 
