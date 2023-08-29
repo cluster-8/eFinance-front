@@ -16,7 +16,7 @@ import LinhaDoTempo from '../pages/admin/ranking/LinhaDoTempo.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: { name: "dashboard" },
+    redirect: { name: "admin/dashboard" },
   },
   {
     name: "admin",
