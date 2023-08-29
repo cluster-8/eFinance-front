@@ -38,13 +38,13 @@ export default defineComponent({
         sortable: true,
         sortingFn: (a, b) => (a > b ? -1 : 1),
       },
-      {
-        key: "valorMinimo",
-        name: "Valor Mínimo",
-        label: "Valor Mínimo (R$)",
-        sortable: true,
-        sortingFn: (a, b) => (a > b ? -1 : 1),
-      },
+      // {
+      //   key: "valorMinimo",
+      //   name: "Valor Mínimo",
+      //   label: "Valor Mínimo (R$)",
+      //   sortable: true,
+      //   sortingFn: (a, b) => (a > b ? -1 : 1),
+      // },
       {
         key: "dataVigencia",
         name: "Data de Vigência",
